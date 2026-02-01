@@ -3,12 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { User, UserAuthResponse } from '../models/userModel';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 // import { Token } from '@angular/compiler';
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  private url = 'http://localhost:3000/api/auth'; // לעשות עם קובץ סביבה (.env)???
+  private url = `${environment.apiUrl}/auth`;
+  // private url = 'http://localhost:3000/api/auth'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
   private userBehaviorSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   public user$: Observable<User | null> = this.userBehaviorSubject.asObservable();
@@ -42,7 +44,7 @@ export class Auth {
       tap(response => {
         localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('token', response.token);
-        // this.userBehaviorSubject.next(response.user);
+        this.userBehaviorSubject.next(response.user);
         // this.userBehaviorSubject.next(response.user); // אם רוצים לעדכן את המשתמש הנוכחי ???
       }),
       catchError(error => {
@@ -58,7 +60,7 @@ export class Auth {
       tap(response => {
         localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('token', response.token);
-        // this.userBehaviorSubject.next(response.user)
+        this.userBehaviorSubject.next(response.user);
         // this.userBehaviorSubject.next(response.user); // אם רוצים לעדכן את המשתמש הנוכחי ???
       }),
       catchError(error => {

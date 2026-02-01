@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../models/taskModel';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Tasks {
-  private url = 'http://localhost:3000/api/tasks'; // לעשות עם קובץ סביבה (.env)???
+  private url = `${environment.apiUrl}/tasks`;
+  // private url = 'http://localhost:3000/api/tasks'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
   getTasks(): Observable<Task[]> {

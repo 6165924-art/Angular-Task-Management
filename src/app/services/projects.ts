@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from '../models/projectModel';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Projects {
-  private url = 'http://localhost:3000/api/projects'; // לעשות עם קובץ סביבה (.env)???
+  private url = `${environment.apiUrl}/projects`;
+  // private url = 'http://localhost:3000/api/projects'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
   getProjects(): Observable<Project[]> {

@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Team } from '../models/teamModel';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Teams {
-  private url = 'http://localhost:3000/api/teams'; // לעשות עם קובץ סביבה (.env)???
+  private url = `${environment.apiUrl}/teams`;
+  // private url = 'http://localhost:3000/api/teams'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
   getTeams(): Observable<Team[]> {

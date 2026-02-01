@@ -1,0 +1,38 @@
+<form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="projectId">מזהה פרויקט</label><br/>
+    <input id="projectId" formControlName="projectId"/>
+    
+    @if (addTaskForm.get('projectId')?.touched && addTaskForm.get('projectId')?.invalid) {
+      <div style="color:red;">
+        מזהה קבוצה חובה.
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="title">כותרת</label><br/>
+    <input id="title" formControlName="title"/>
+    
+    @if (addTaskForm.get('title')?.touched && addTaskForm.get('title')?.invalid) {
+      <div style="color:red;">
+        כותרת חובה ולפחות 2 תווים.
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="description">תיאור</label><br/>
+    <input id="description" formControlName="description"/>
+<!--     
+    @if (addProjectForm.get('description')?.touched && addProjectForm.get('description')?.invalid) {
+      <div style="color:red;">
+        תיאור חובה.
+      </div>
+    } -->
+  </div>
+   
+  <button type="submit" [disabled]="addTaskForm.invalid">הוסף משימה</button>
+</form>
+

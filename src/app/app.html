@@ -1,0 +1,19 @@
+<nav>
+  <!-- <a routerLinkActive="active" routerLink="/teams">Teams</a> -->
+  @if(isLoggedIn()) {
+  <!-- <a routerLinkActive="active" routerLink="/register">Register | </a>
+  <a routerLinkActive="active" routerLink="/login">Login | </a> -->
+    <a routerLinkActive="active" routerLink="/logout">Logout</a>
+      <a routerLinkActive="active" routerLink="/team">get Teams</a>
+  }
+    @else{
+  <a routerLinkActive="active" routerLink="/register">Register</a>
+  <a routerLinkActive="active" routerLink="/login">Login</a>
+  <!-- <a routerLinkActive="active" routerLink="/logout">Logout | </a> -->
+  <!-- <a routerLinkActive="active" routerLink="/team">get Teams | </a> -->
+  <!-- <a routerLinkActive="active" routerLink="/team/new">Add Team | </a> -->
+  <!-- <a routerLinkActive="active" routerLink="/project">get Projects | </a> -->
+  <!-- <a routerLinkActive="active" routerLink="/project/new">Add Project</a> -->
+  }
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,38 @@
+<form [formGroup]="addProjectForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="teamId">מזהה קבוצה</label><br/>
+    <input id="teamId" formControlName="teamId"/>
+    
+    @if (addProjectForm.get('teamId')?.touched && addProjectForm.get('teamId')?.invalid) {
+      <div style="color:red;">
+        מזהה קבוצה חובה.
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="name">שם פרויקט</label><br/>
+    <input id="name" formControlName="name"/>
+    
+    @if (addProjectForm.get('name')?.touched && addProjectForm.get('name')?.invalid) {
+      <div style="color:red;">
+        שם פרויקט חובה ולפחות 2 תווים.
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="description">תיאור</label><br/>
+    <input id="description" formControlName="description"/>
+<!--     
+    @if (addProjectForm.get('description')?.touched && addProjectForm.get('description')?.invalid) {
+      <div style="color:red;">
+        תיאור חובה.
+      </div>
+    } -->
+  </div>
+   
+  <button type="submit" [disabled]="addProjectForm.invalid">הוסף פרויקט</button>
+</form>
+

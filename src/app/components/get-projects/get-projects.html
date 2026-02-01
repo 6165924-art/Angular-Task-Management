@@ -1,0 +1,19 @@
+<ul>
+  <button (click)="navigateToAddProject()">הוספת פרויקט</button>
+
+  @for(project of projects();track project.id) {
+  @if(teamId() == null||teamId() ==project.team_id){
+
+  <li style="border:1px solid black; margin:10px; padding:10px;">
+    <p>team id: {{project.team_id}}</p>
+    <h3>Project ID: {{project.id}}</h3>
+    <p>Name: {{project.name}}</p>
+    @if(project.description){
+    <p>Description: {{project.description}}</p>}
+    <p>created at: {{project.created_at}}</p>
+    <button (click)="navigateToTasks(project.id!)">צפייה במשימות הפרויקט</button>
+  </li>
+  }
+  }
+</ul>
+<!-- <app-add-project></app-add-project> -->

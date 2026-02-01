@@ -1,0 +1,17 @@
+<ul>
+  <button (click)="navigateToAddTask()">הוספת משימה</button>
+  @for(task of tasks(); track task.id) {
+  @if(projectId() == null||projectId() ==task.project_id){
+  <li style="border:1px solid black; margin:10px; padding:10px;">
+    <p>project id: {{task.project_id}}</p>
+    <h3>Task ID: {{task.id}}</h3>
+    <p>Title: {{task.title}}</p>
+    <p>Description: {{task.description}}</p>
+    <p>Status: {{task.status}}</p>
+    <button (click)="deleteTask(task.id!)">מחק</button>
+    <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+    <hr>
+    <app-get-comments [taskId]="task.id!"></app-get-comments>
+  </li>
+  }
+  }

@@ -1,0 +1,17 @@
+<form [formGroup]="addMemberForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="name">מספר משתמש</label><br/>
+    <input id="name" formControlName="name" type="text"/>
+
+    @if (addMemberForm.get('name')?.touched ) {
+      <div style="color:red;">
+        מספר קבוצה חובה.
+      </div>
+    }
+  </div>
+
+  <button type="submit" >הוסף משתמש לקבוצה</button>
+  <!-- <button type="submit" [disabled]="addMemberForm.invalid">הוסף משתמש לקבוצה</button> -->
+</form>
+

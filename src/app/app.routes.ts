@@ -21,11 +21,11 @@ export const routes: Routes = [
     {path:'team',component:GetTeams},
     {path:'project',component:GetProjects},
     {path:'project/new',component:AddProject},
-    {path:'project/:teamId/projects',component:GetProjects},
-    {path:'project/:projectId/tasks',component:GetTasks},
+    // {path:'project/:teamId/projects',component:GetProjects},
+    // {path:'project/:projectId/tasks',component:GetTasks},
     {path:'task',component:GetTasks},
     {path:'task/new',component:AddTask},
-    {path:'task/:taskId/update',component:UpdateTask},
+    // {path:'task/:taskId/update',component:UpdateTask},
     {path:'comment/new',component:AddComment},
 ];
 

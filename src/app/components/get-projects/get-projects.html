@@ -1,8 +1,14 @@
 <ul>
   <button (click)="navigateToAddProject()">הוספת פרויקט</button>
-
+   <button (click)="navigateToAddMember()">הוספת חבר בקבוצה</button>
+@if(isLouding()) {
+     <p>טוען...</p>
+ }
+ @else if(projects().length === 0) {
+   <p>לא קיימים פרויקטים להצגה.</p>
+ }
   @for(project of projects();track project.id) {
-  @if(teamId() == null||teamId() ==project.team_id){
+  <!-- @if(teamId() == null||teamId() ==project.team_id){ -->
 
   <li style="border:1px solid black; margin:10px; padding:10px;">
     <p>team id: {{project.team_id}}</p>
@@ -14,6 +20,6 @@
     <button (click)="navigateToTasks(project.id!)">צפייה במשימות הפרויקט</button>
   </li>
   }
-  }
+  <!-- } -->
 </ul>
 <!-- <app-add-project></app-add-project> -->

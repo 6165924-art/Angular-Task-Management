@@ -1,17 +1,77 @@
-<ul>
-  <button (click)="navigateToAddTask()">הוספת משימה</button>
-  @for(task of tasks(); track task.id) {
-  @if(projectId() == null||projectId() ==task.project_id){
-  <li style="border:1px solid black; margin:10px; padding:10px;">
-    <p>project id: {{task.project_id}}</p>
-    <h3>Task ID: {{task.id}}</h3>
-    <p>Title: {{task.title}}</p>
-    <p>Description: {{task.description}}</p>
-    <p>Status: {{task.status}}</p>
-    <button (click)="deleteTask(task.id!)">מחק</button>
-    <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
-    <hr>
-    <app-get-comments [taskId]="task.id!"></app-get-comments>
-  </li>
+<button (click)="navigateToAddTask()">הוספת משימה</button>
+<div>
+  @if(isLouding()) {
+  <p>טוען...</p>
   }
+  @else if(tasks().length === 0) {
+  <p>לא קיימות משימות להצגה.</p>
   }
+  @else{
+  <div>
+    <p>tasks to do</p>
+    @if(todoTasks().length === 0) {
+    <p>לא קיימות משימות לביצוע.</p>
+    }
+    <ul>
+      @for(task of todoTasks(); track task.id) {
+      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
+      <li style="border:1px solid black; margin:10px; padding:10px;">
+        <p>project id: {{task.project_id}}</p>
+        <h3>Task ID: {{task.id}}</h3>
+        <p>Title: {{task.title}}</p>
+        <p>Description: {{task.description}}</p>
+        <p>Status: {{task.status}}</p>
+        <button (click)="deleteTask(task.id!)">מחק</button>
+        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <hr>
+        <app-get-comments [taskId]="task.id!"></app-get-comments>
+      </li>
+      }
+    </ul>
+  </div>
+  <div>
+    <p>in progress tasks</p>
+    @if(inProgressTasks().length === 0) {
+    <p>לא קיימות משימות בתהליך.</p>
+    }
+    <ul>
+      @for(task of inProgressTasks(); track task.id) {
+      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
+      <li style="border:1px solid black; margin:10px; padding:10px;">
+        <p>project id: {{task.project_id}}</p>
+        <h3>Task ID: {{task.id}}</h3>
+        <p>Title: {{task.title}}</p>
+        <p>Description: {{task.description}}</p>
+        <p>Status: {{task.status}}</p>
+        <button (click)="deleteTask(task.id!)">מחק</button>
+        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <hr>
+        <app-get-comments [taskId]="task.id!"></app-get-comments>
+      </li>
+      }
+    </ul>
+  </div>
+  <div>
+    <p>done tasks</p>
+    @if(doneTasks().length === 0) {
+    <p>לא קיימות משימות שהתבצעו.</p>
+    }
+    <ul>
+      @for(task of doneTasks(); track task.id) {
+      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
+      <li style="border:1px solid black; margin:10px; padding:10px;">
+        <p>project id: {{task.project_id}}</p>
+        <h3>Task ID: {{task.id}}</h3>
+        <p>Title: {{task.title}}</p>
+        <p>Description: {{task.description}}</p>
+        <p>Status: {{task.status}}</p>
+        <button (click)="deleteTask(task.id!)">מחק</button>
+        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <hr>
+        <app-get-comments [taskId]="task.id!"></app-get-comments>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+</div>

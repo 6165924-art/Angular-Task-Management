@@ -16,6 +16,18 @@ export class Auth {
   public user$: Observable<User | null> = this.userBehaviorSubject.asObservable();
   private router = inject(Router);
 
+  constructor() {
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    try {
+      const user: User = JSON.parse(userStr);
+      this.userBehaviorSubject.next(user);
+    }
+     catch (error) {
+      console.error('Error parsing user from localStorage:', error);
+    }
+  }
+}
   // public isLoggedIn$: Observable<boolean> = this.user$.pipe(
   //   map(user => !!user)
   // );

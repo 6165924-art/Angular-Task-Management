@@ -2,7 +2,10 @@
       <!-- <a routerLinkActive="active" routerLink="/team/new">Add Team</a> -->
 <!-- <router-outlet></router-outlet> -->
  <button (click)="navigateToAddTeam()">הוספת קבוצה</button>
- @if(teams().length === 0) {
+ @if(isLouding()) {
+     <p>טוען...</p>
+ }
+ @else if(teams().length === 0) {
    <p>לא קיימות קבוצות להצגה.</p>
  }
  @for(team of teams();track team.id) {

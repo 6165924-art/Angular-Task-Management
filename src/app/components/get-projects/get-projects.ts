@@ -15,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class GetProjects {
   projectService = inject(Projects);
   private router = inject(Router);
+  // private activatedRoute=inject(ActivatedRoute)
+
   private route = inject(ActivatedRoute);
   projects = signal<Project[]>([]);
   isLouding = signal<boolean>(false);
@@ -23,15 +25,22 @@ export class GetProjects {
 
 
   //   navigateToTasks() {
-  //   this.router.navigate(['/task']);
+  //   this.router.navigate(['/tasks']);
   // }
+    // this.router.navigate(['new'], { relativeTo: this.activatedRoute });
 
   navigateToTasks(projectId: number) {
-    this.router.navigate(['project', projectId, 'tasks']);
+    // this.router.navigate(['project', projectId, 'tasks']);
+    this.router.navigate([projectId, 'tasks'], { relativeTo: this.route });
   }
 
   navigateToAddProject(){
-    this.router.navigate(['/project/new']);
+    this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  navigateToAddMember(){
+      console.log('teamId value:', this.teamId()); 
+    this.router.navigate([`/teams/${this.teamId()}/member/new`]);
   }
 
   ngOnInit() {
@@ -52,7 +61,10 @@ export class GetProjects {
     this.error.set(null);
     this.projectService.getProjects().subscribe({
       next: (res) => {
-        this.projects.set(res);
+        const filteredProjects = res.filter(
+          project=>project.team_id==this.teamId()
+        );
+        this.projects.set(filteredProjects);
         console.log('projects:', this.projects());
         this.isLouding.set(false);
       },

@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../services/auth';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/userModel';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
   // imports: [ReactiveFormsModule,MatInputModule,MatButtonModule,CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
@@ -33,7 +33,7 @@ export class Register {
         next: (res) => {
           this.error.set(null);
           console.log('Registration successful', res);
-          this.router.navigate(['/team']);
+          this.router.navigate(['/tasks']);
         },
         error: (err) => {
           if (err.error === 409)
@@ -42,7 +42,7 @@ export class Register {
             this.error.set('Registration failed. Please try again later.');
         },
       });
-    // this.router.navigate(['/team']);
+    // this.router.navigate(['/teams']);
   }
 }
 

@@ -3,11 +3,11 @@ import { Auth } from '../../services/auth';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../models/userModel';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -32,7 +32,7 @@ export class Login {
         next: (res) => {
           this.error.set(null);
           console.log('Login successful', res);
-              this.router.navigate(['/team']);
+              this.router.navigate(['/tasks']);
 
         },
         error: (err) => {
@@ -42,7 +42,7 @@ export class Login {
             this.error.set('Login failed. Please try again later.');
         },
       });
-    // this.router.navigate(['/team']);
+    // this.router.navigate(['/teams']);
 
   }
 }

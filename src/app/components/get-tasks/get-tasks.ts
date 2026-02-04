@@ -17,22 +17,26 @@ export class GetTasks implements OnInit {
   private route = inject(ActivatedRoute);
 
   tasks = signal<Task[]>([]);
+  todoTasks = signal<Task[]>([]);
+  inProgressTasks = signal<Task[]>([]);
+  doneTasks = signal<Task[]>([]);
   isLouding = signal<boolean>(false);
   error = signal<string | null>(null);
-  projectId=signal<number | null>(null);
+  projectId = signal<number | null>(null);
 
-  navigateToAddTask(){
-    this.router.navigate(['/task/new']);
+  navigateToAddTask() {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  navigateToProjects(teamId: number){
-    this.router.navigate(['/project',teamId,'projects']);
-  }
-  navigateToUpdateTask(taskId:number){
-    this.router.navigate([`/task/${taskId}/update`]);
+  // navigateToProjects(teamId: number) {
+  //   this.router.navigate(['/projects', teamId, 'projects']);
+  // }
+  navigateToUpdateTask(taskId: number) {
+    this.router.navigate([`${taskId}/update`],{ relativeTo: this.route });
+    // this.router.navigate([`/tasks/${taskId}/update`]);
   }
 
-deleteTask(taskId: number){
+  deleteTask(taskId: number) {
     this.taskService.deleteTask(taskId).subscribe({
       next: (res) => {
         this.loudTasks();
@@ -41,7 +45,7 @@ deleteTask(taskId: number){
         this.error.set('Failed to delete task');
       }
     });
-}
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -49,25 +53,50 @@ deleteTask(taskId: number){
       if (id) {
         this.projectId.set(parseInt(id));
       }
-  });
-      this.loudTasks();
+    });
+    this.loudTasks();
 
-}
+  }
   loudTasks() {
     this.isLouding.set(true);
     this.error.set(null);
     this.taskService.getTasks().subscribe({
       next: (res) => {
-        this.tasks.set(res);
+        if (this.projectId()) {
+          const filteredTasks = res.filter(
+            task => task.project_id == this.projectId()
+          );
+          this.tasks.set(filteredTasks);
+        }
+        else
+          this.tasks.set(res);
+        // "todo" | "in progress" | "done"
+        const todoTasks = this.tasks().filter(
+          task => task.status == 'todo'
+        );
+        this.todoTasks.set(todoTasks)
+        console.log('to do: ', this.todoTasks())
+        const inProgressTasks = this.tasks().filter(
+          task => task.status == 'in progress'
+        );
+        this.inProgressTasks.set(inProgressTasks)
+        console.log('in progress: ', this.inProgressTasks())
+        const doneTasks = this.tasks().filter(
+          task => task.status == 'done'
+        );
+        this.doneTasks.set(doneTasks)
+        console.log('done: ', this.doneTasks())
+
         this.isLouding.set(false);
-        console.log("project id: "+this.projectId())
+        console.log("project id: " + this.projectId())
       },
       error: (err) => {
         this.error.set('Failed to load tasks');
         this.isLouding.set(false);
       },
       complete: () => {
-         this.isLouding.set(false); }
+        this.isLouding.set(false);
+      }
     })
   }
 

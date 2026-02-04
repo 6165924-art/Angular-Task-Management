@@ -24,7 +24,7 @@ export class GetComments {
   // taskId = signal<number | null>(null);
 
   navigateToAddComment() {
-    this.router.navigate(['/comment/new']);
+    this.router.navigate([`${this.taskId}/comments/new`], { relativeTo: this.route });
   }
 
   ngOnInit() {
@@ -41,7 +41,10 @@ export class GetComments {
     this.error.set(null);
     this.commentService.getComments(this.taskId!).subscribe({
       next: (res) => {
-        this.comments.set(res);
+        const filteredComments = res.filter(
+          comment=>comment.task_id==this.taskId
+        ); 
+        this.comments.set(filteredComments);
         this.isLouding.set(false);
       },
       error: (err) => {

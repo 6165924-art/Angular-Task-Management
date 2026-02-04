@@ -6,7 +6,8 @@ import { AddMember } from '../add-member/add-member';
 
 @Component({
   selector: 'app-add-team',
-  imports: [ReactiveFormsModule,CommonModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-team.html',
   styleUrl: './add-team.css',
 })
@@ -28,7 +29,7 @@ export class AddTeam {
           console.log('Login successful', res);
         },
         error: (err) => {
-            this.error.set('Add Team failed. Please try again later.');
+          this.error.set('Add Team failed. Please try again later.');
         },
       });
   }

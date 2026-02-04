@@ -22,11 +22,11 @@ export class GetTeams {
   error = signal<string | null>(null);
 
   navigateToAddTeam(){
-    this.router.navigate(['/team/new']);
+    this.router.navigate(['/teams/new']);
   }
 
   navigateToProjects(teamId: number){
-    this.router.navigate(['/project',teamId,'projects']);
+    this.router.navigate(['/teams',teamId,'projects']);
   }
 
   ngOnInit() {

@@ -33,6 +33,6 @@ private router = inject(Router);
           this.error.set('Add Task failed. Please try again later.');
         },
       });
-      this.router.navigate(['/task']);
+      this.router.navigate(['/tasks']);
   }
 }

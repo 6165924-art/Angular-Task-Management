@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 })
 export class Teams {
   private url = `${environment.apiUrl}/teams`;
-  // private url = 'http://localhost:3000/api/teams'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
   getTeams(): Observable<Team[]> {
@@ -17,7 +16,6 @@ export class Teams {
   }
 
   addTeam(name: string): Observable<Team> {
-    console.log('in addTeam service with name:', name);
     return this.httpClient.post<Team>(this.url, { name });
   }
 

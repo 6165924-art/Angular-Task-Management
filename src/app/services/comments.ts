@@ -8,17 +8,15 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class Comments {
-    private url = `${environment.apiUrl}/comments`;
-  // private url = 'http://localhost:3000/api/comments'; // לעשות עם קובץ סביבה (.env)???
+  private url = `${environment.apiUrl}/comments`;
   private httpClient = inject(HttpClient);
 
-  getComments(taskId:number): Observable<Comment[]> {
+  getComments(taskId: number): Observable<Comment[]> {
     return this.httpClient.get<Comment[]>(`${this.url}?taskId=${taskId}`);
   }
 
-  addComment(comment:{taskId:number,body: string}): Observable<Comment> {
-    console.log('in addComment service with comment:', comment);
+  addComment(comment: { taskId: number, body: string }): Observable<Comment> {
     return this.httpClient.post<Comment>(this.url, comment);
   }
-  
+
 }

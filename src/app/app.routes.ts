@@ -43,9 +43,7 @@ export const routes: Routes = [
     { path: 'teams/:teamId/member/new', component: AddMember, canActivate: [authGuard] },
     { path: 'projects', component: GetProjects, canActivate: [authGuard] },
     { path: 'teams/:teamId/projects/new', component: AddProject, canActivate: [authGuard] },
-    // { path: 'project/new', component: AddProject, canActivate: [authGuard] },
     { path: 'teams/:teamId/projects', component: GetProjects, canActivate: [authGuard] },
-    // { path: 'project/:projectId/tasks', component: GetTasks, canActivate: [authGuard] },
     { path: 'teams/:teamId/projects/:projectId/tasks', component: GetTasks, canActivate: [authGuard] },
     { path: 'tasks', component: GetTasks, canActivate: [authGuard] },
     { path: 'tasks/new', component: AddTask, canActivate: [authGuard] },
@@ -54,6 +52,5 @@ export const routes: Routes = [
     { path: 'teams/:teamId/projects/:projectId/tasks/:taskId/update', component: UpdateTask, canActivate: [authGuard] },
     { path: 'teams/:teamId/projects/:projectId/tasks/:taskId/comments/new', component: AddComment, canActivate: [authGuard] },
     { path: 'tasks/:taskId/comments/new', component: AddComment, canActivate: [authGuard] },
-    // { path: 'comments/new', component: AddComment, canActivate: [authGuard] },
-    { path: '**',component:NotFound } //אולי לשנות את זה ל404
+    { path: '**', component: NotFound }
 ];

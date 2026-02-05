@@ -1,15 +1,14 @@
-export interface User{
+export interface User {
     id?: number;
     name?: string;
     email: string;
     role?: string;
     password?: string;
-    token?: string; // האם למחוק???
+    token?: string;
 }
 
-export interface UserAuthResponse{
+export interface UserAuthResponse {
     user: User;
     token: string;
 }
 
-// password????

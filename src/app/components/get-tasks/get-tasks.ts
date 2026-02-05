@@ -30,14 +30,9 @@ export class GetTasks implements OnInit {
   navigateToAllProjectsInTheTeam() {
     this.router.navigate(['../../'], { relativeTo: this.route });
   }
-  // navigateToProjects(teamId: number) {
-  //   this.router.navigate(['/projects', teamId, 'projects']);
-  // }
   navigateToUpdateTask(taskId: number, task: Task) {
     localStorage.setItem('task', JSON.stringify(task));
     this.router.navigate([`${taskId}/update`], { relativeTo: this.route });
-    // this.router.navigate([`${taskId}/update`],{ relativeTo: this.route,state:{task} });
-    // this.router.navigate([`/tasks/${taskId}/update`]);
   }
 
   deleteTask(taskId: number) {
@@ -66,33 +61,22 @@ export class GetTasks implements OnInit {
     this.error.set(null);
     this.taskService.getTasks(this.projectId()).subscribe({
       next: (res) => {
-        // if (this.projectId()) {
-        //   const filteredTasks = res.filter(
-        //     task => task.project_id == this.projectId()
-        //   );
-        //   this.tasks.set(filteredTasks);
-        // }
-        // else
+
         this.tasks.set(res);
-        // "todo" | "in progress" | "done"
         const todoTasks = this.tasks().filter(
           task => task.status == 'todo'
         );
         this.todoTasks.set(todoTasks)
-        console.log('to do: ', this.todoTasks())
         const inProgressTasks = this.tasks().filter(
           task => task.status == 'in progress'
         );
         this.inProgressTasks.set(inProgressTasks)
-        console.log('in progress: ', this.inProgressTasks())
         const doneTasks = this.tasks().filter(
           task => task.status == 'done'
         );
         this.doneTasks.set(doneTasks)
-        console.log('done: ', this.doneTasks())
 
         this.isLouding.set(false);
-        console.log("project id: " + this.projectId())
       },
       error: (err) => {
         this.error.set('Failed to load tasks');

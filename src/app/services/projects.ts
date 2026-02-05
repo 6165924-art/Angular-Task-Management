@@ -9,15 +9,13 @@ import { environment } from '../environments/environment';
 })
 export class Projects {
   private url = `${environment.apiUrl}/projects`;
-  // private url = 'http://localhost:3000/api/projects'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
   getProjects(): Observable<Project[]> {
     return this.httpClient.get<Project[]>(this.url);
   }
 
-  addProject(project:{teamId: number, name:string, description:string|null}): Observable<Project> {
-    console.log('in addProject service with name:', project);
+  addProject(project: { teamId: number, name: string, description: string | null }): Observable<Project> {
     return this.httpClient.post<Project>(this.url, project);
   }
 }

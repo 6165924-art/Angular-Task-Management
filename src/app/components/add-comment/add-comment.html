@@ -1,28 +1,14 @@
 <form [formGroup]="addCommentForm" (ngSubmit)="onSubmit()">
-
-  <!-- <div>
-    <label for="taskId">מזהה משימה</label><br/>
-    <input id="taskId" formControlName="taskId"/>
-    
-    @if (addCommentForm.get('taskId')?.touched && addCommentForm.get('taskId')?.invalid) {
-      <div style="color:red;">
-        מזהה קבוצה חובה.
-      </div>
-    }
-  </div> -->
-
   <div>
-    <label for="body">תוכן ההערה</label><br/>
+    <label for="body">תוכן ההערה</label><br />
     <textarea id="body" formControlName="body" type="text"></textarea>
-    <!-- <input id="body" formControlName="body" type="text"/> -->
-    
+
     @if (addCommentForm.get('body')?.touched && addCommentForm.get('body')?.invalid) {
-      <div style="color:red;">
-        תוכן ההערה חובה ולפחות 2 תווים.
-      </div>
+    <div style="color:red;">
+      תוכן ההערה חובה ולפחות 2 תווים.
+    </div>
     }
   </div>
-   
+
   <button type="submit" [disabled]="addCommentForm.invalid">הוסף הערה</button>
 </form>
-

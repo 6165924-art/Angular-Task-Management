@@ -17,25 +17,22 @@ export class AddTask {
   projectId = signal<number | null>(null)
   private route = inject(ActivatedRoute);
   router = inject(Router)
-  projectService = inject(Projects);//// ???
-  projects = signal<Project[]>([]); //// ??? 
-  // today = inject(Date) 
-  // today = signal<Date>(new Date().)
-   
+  projectService = inject(Projects);
+  projects = signal<Project[]>([]);
 
   addTaskForm = new FormGroup({
-    projectId: new FormControl('',[Validators.required]),
+    projectId: new FormControl('', [Validators.required]),
     title: new FormControl('', [Validators.required, Validators.minLength(2)]),
     description: new FormControl(''),
     status: new FormControl(''),
     priority: new FormControl(''),
-    dueDate:new FormControl('')
+    dueDate: new FormControl('')
   });
   error = signal<string | null>(null);
 
-navigateToAllTasks(){
-      this.router.navigate(['../'], { relativeTo: this.route });
-}
+  navigateToAllTasks() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -44,23 +41,13 @@ navigateToAllTasks(){
         this.projectId.set(parseInt(id));
       }
     });
-    this.loudProjects(); //// ???
+    this.loudProjects();
 
-    if(this.projectId()){
-    this.addTaskForm.patchValue({
-      projectId:this.projectId()!.toString()
-    })
+    if (this.projectId()) {
+      this.addTaskForm.patchValue({
+        projectId: this.projectId()!.toString()
+      })
     }
-    // this.projectId()?valueChanges.subscribe(value=>{
-
-    // })
-    // // **תנאי דינמי: אם priority הוא high, assignee הופך לחובה**
-    // this.addTaskForm.get('priority')?.valueChanges.subscribe(value => {
-    //   const assigneeControl = this.addTaskForm.get('assignee');
-    //  const today = new Date();
-    // today().setHours(0, 0, 0, 0); // איפוס שעה לשוואה הוגנת
-    // console.log('today==========',this.today)
-   
   }
 
   loudProjects() {
@@ -68,7 +55,6 @@ navigateToAllTasks(){
     this.projectService.getProjects().subscribe({
       next: (res) => {
         this.projects.set(res);
-        console.log('projects:', this.projects());
       },
       error: (err) => {
         this.error.set('Failed to load projects');
@@ -79,19 +65,12 @@ navigateToAllTasks(){
   }
 
   onSubmit() {
-    console.log('in onsubmit');
-    // const project:Project = {team_id: this.addProjectForm.value.teamId!, name: this.addProjectForm.value.name!, description: this.addProjectForm.value.description!};
-    const { projectId, title, description,status,priority,dueDate } = this.addTaskForm.value;
-    // const project_id = projectId ? parseInt(projectId) : this.projectId()!
+    const { projectId, title, description, status, priority, dueDate } = this.addTaskForm.value;
 
-    if (typeof projectId == 'string'&&typeof title == 'string')
-      this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status:status||null,priority:priority||null,due_date:dueDate||null}).subscribe({
-      // this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status:status||null,priority:priority||null,due_date:dueDate||null}).subscribe({
-      // this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null,due_date:dueDate||null}).subscribe({
-        // this.auth.register({name,email,password}).subscribe({
+    if (typeof projectId == 'string' && typeof title == 'string')
+      this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status: status || null, priority: priority || null, due_date: dueDate || null }).subscribe({
         next: (res) => {
           this.error.set(null);
-          console.log('Add Task successful', res);
           this.router.navigate(['../'], { relativeTo: this.route })
 
         },

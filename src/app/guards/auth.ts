@@ -8,7 +8,6 @@ export const authGuard: CanActivateFn = () => {
   const token = auth.getToken();
 
   if (token) return true;
-  // return router.createUrlTree(['/login']);
   return router.navigate(['/login']);
 };
 
@@ -17,40 +16,8 @@ export const loginGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = auth.getToken();
 
-  // אם המשתמש כבר מחובר, העבר אותו ל-tasks
-  if (!token)   return true; // בואו בעדינות ללוגין
+  if (!token) return true;
 
-    return router.navigate(['/tasks']);
+  return router.navigate(['/tasks']);
 };
 
-
-// // auth.guard.ts
-// import { Injectable } from '@angular/core';
-// import { Router, CanActivateFn } from '@angular/router';
-// import { inject } from '@angular/core';
-// import { Auth } from '../services/auth';
-
-// export const authGuard: CanActivateFn = (route, state) => {
-//   const authService = inject(Auth);
-//   const router = inject(Router);
-
-//   if (authService.getToken()) {
-//     return true; // הפעולה מותרת
-//   }
-
-//   router.navigate(['/login']);
-//   return false;
-// };
-
-// export const loginGuard: CanActivateFn = (route, state) => {
-//   const authService = inject(Auth);
-//   const router = inject(Router);
-
-//   // אם המשתמש כבר מחובר, העבר אותו ל-tasks
-//   if (authService.getToken()) {
-//     router.navigate(['/task']);
-//     return false;
-//   }
-
-//   return true; // בואו בעדינות ללוגין
-// };

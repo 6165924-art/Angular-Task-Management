@@ -17,19 +17,17 @@ export class AddProject {
   router = inject(Router)
 
   addProjectForm = new FormGroup({
-    // teamId: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     description: new FormControl('')
   });
   error = signal<string | null>(null);
 
-navigateToAllProject(){
-      this.router.navigate(['../'], { relativeTo: this.route });
-}
+  navigateToAllProject() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      console.log('ניתוב: ', this.route);
 
       const id = params.get('teamId');
       if (id) {
@@ -39,15 +37,11 @@ navigateToAllProject(){
   }
 
   onSubmit() {
-    console.log('in onsubmit');
-    // const project:Project = {team_id: this.addProjectForm.value.teamId!, name: this.addProjectForm.value.name!, description: this.addProjectForm.value.description!};
     const { name, description } = this.addProjectForm.value;
     if (typeof name == 'string')
       this.projectService.addProject({ teamId: this.teamId()!, name, description: description || null }).subscribe({
-        // this.auth.register({name,email,password}).subscribe({
         next: (res) => {
           this.error.set(null);
-          console.log('Add Project successful', res);
           this.router.navigate(['../'], { relativeTo: this.route })
         },
         error: (err) => {

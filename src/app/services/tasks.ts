@@ -9,32 +9,26 @@ import { environment } from '../environments/environment';
 })
 export class Tasks {
   private url = `${environment.apiUrl}/tasks`;
-  // private url = 'http://localhost:3000/api/tasks'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
-  getTasks(projectId:number|null): Observable<Task[]> {
-    if(projectId){
+  getTasks(projectId: number | null): Observable<Task[]> {
+    if (projectId) {
       return this.httpClient.get<Task[]>(`${this.url}?projectId=${projectId}`);
     }
     return this.httpClient.get<Task[]>(this.url);
   }
 
-  // addTask(task: { projectId: number, title: string, description: string | null,status?: string ,priority?: string ,due_date: string | null }): Observable<Task> {
-  addTask(task: { projectId: number, title: string, description: string | null,status: string | null,priority: string | null,due_date: string | null }): Observable<Task> {
-  // addTask(task: { projectId: number, title: string, description: string | null,due_date: string | null }): Observable<Task> {
-  if(!task.status)task.status='todo'
-  if(!task.priority)task.priority='normal'
-    console.log('in addTask service with task:', task);
+  addTask(task: { projectId: number, title: string, description: string | null, status: string | null, priority: string | null, due_date: string | null }): Observable<Task> {
+    if (!task.status) task.status = 'todo'
+    if (!task.priority) task.priority = 'normal'
     return this.httpClient.post<Task>(this.url, task);
   }
 
-  updateTask(task: { id: number, title: string, description: string | null, status: string | null , priority: string | null , due_date: string | null  }): Observable<Task> {
-    console.log('in updateTask service with task:', task);
+  updateTask(task: { id: number, title: string, description: string | null, status: string | null, priority: string | null, due_date: string | null }): Observable<Task> {
     return this.httpClient.patch<Task>(`${this.url}/${task.id}`, task);
   }
 
   deleteTask(id: number): Observable<void> {
-    console.log('in deleteTask service with id:', id);
     return this.httpClient.delete<void>(`${this.url}/${id}`);
   }
 }

@@ -1,19 +1,16 @@
 <button (click)="navigateToAddComment()">הוספת הערה</button>
 <ul>
     @if(isLouding()) {
-     <p>טוען...</p>
- }
- @else if(comments().length === 0) {
-   <p>לא קיימות הערות להצגה.</p>
- }
+    <p>טוען...</p>
+    }
+    @else if(comments().length === 0) {
+    <p>לא קיימות הערות להצגה.</p>
+    }
     @for(comment of comments(); track comment.id) {
-    <!-- @if(taskId == null||taskId ==comment.task_id){ -->
     <li style="border:1px solid black; margin:10px; padding:10px;">
-        <!-- <p>task id: {{comment.task_id}}</p> -->
         <p>user id: {{comment.user_id}}</p>
         <h4>Comment ID: {{comment.id}}</h4>
         <p>{{comment.body}}</p>
         <p>created at: {{comment.created_at}}</p>
     </li>
     }
-    <!-- } -->

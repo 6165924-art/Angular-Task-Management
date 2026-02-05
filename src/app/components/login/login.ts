@@ -7,7 +7,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
+  imports: [ReactiveFormsModule, CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -21,18 +21,14 @@ export class Login {
   });
   error = signal<string | null>(null);
   onSubmit() {
-    console.log('in onsubmit');
     const user: User = { email: this.loginForm.value.email!, password: this.loginForm.value.password! };
-    // const {username,email,password}=this.registerForm.value;
     if (typeof user.email == 'string' && typeof user.password == 'string')
 
 
       this.auth.login(user).subscribe({
-        // this.auth.register({name,email,password}).subscribe({
         next: (res) => {
           this.error.set(null);
-          console.log('Login successful', res);
-              this.router.navigate(['/tasks']);
+          this.router.navigate(['/tasks']);
 
         },
         error: (err) => {
@@ -42,7 +38,6 @@ export class Login {
             this.error.set('Login failed. Please try again later.');
         },
       });
-    // this.router.navigate(['/teams']);
 
   }
 }

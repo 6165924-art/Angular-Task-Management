@@ -17,13 +17,10 @@
     }
     <ul>
       @for(task of todoTasks(); track task.id) {
-      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
-        <!-- <p>project id: {{task.project_id}}</p> -->
         <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
         @if(task.description){<p>Description: {{task.description}}</p>}
-        <!-- <p>Status: {{task.status}}</p> -->
         <p>Priority: {{task.priority}}</p>
         <p>Created At: {{task.created_at}}</p>
         @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}
@@ -43,12 +40,10 @@
     }
     <ul>
       @for(task of inProgressTasks(); track task.id) {
-      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
         <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
         @if(task.description){<p>Description: {{task.description}}</p>}
-        <!-- <p>Status: {{task.status}}</p> -->
         <p>Priority: {{task.priority}}</p>
         <p>Created At: {{task.created_at}}</p>
         @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}
@@ -68,12 +63,10 @@
     }
     <ul>
       @for(task of doneTasks(); track task.id) {
-      <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
         <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
         @if(task.description){<p>Description: {{task.description}}</p>}
-        <!-- <p>Status: {{task.status}}</p> -->
         <p>Priority: {{task.priority}}</p>
         <p>Created At: {{task.created_at}}</p>
         @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}

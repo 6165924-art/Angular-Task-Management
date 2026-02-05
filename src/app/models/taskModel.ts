@@ -1,10 +1,10 @@
 export interface Task {
     id?: number,
-    project_id:number,
+    project_id: number,
     title: string,
     description?: string,
-    status?: string,//"todo" | "in-progress" | "done",
-    priority?: string,//"low" | "medium" | "high",
+    status?: string,
+    priority?: string,
     assignee_id?: number,
     due_date?: Date,
     order_index?: number,

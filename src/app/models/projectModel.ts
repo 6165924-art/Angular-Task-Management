@@ -3,6 +3,6 @@ export interface Project {
     team_id: number,
     name: string,
     description?: string,
-    status?: string,//"active" | "completed" | "on-hold", //???
-    created_at?: Date /////////////////?
+    status?: string,
+    created_at?: Date
 }

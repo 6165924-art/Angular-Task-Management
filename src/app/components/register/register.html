@@ -1,52 +1,41 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
   <div>
-    <label for="username">שם משתמש</label><br/>
-    <input id="username" formControlName="username"/>
-    
+    <label for="username">שם משתמש</label><br />
+    <input id="username" formControlName="username" />
+
     @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
-      <div style="color:red;">
-        שם משתמש חובה ולפחות 2 תווים.
-      </div>
+    <div style="color:red;">
+      שם משתמש חובה ולפחות 2 תווים.
+    </div>
     }
   </div>
 
   <div>
-    <label for="email">אימייל</label><br/>
-    <input id="email" formControlName="email" type="email"/>
-    
+    <label for="email">אימייל</label><br />
+    <input id="email" formControlName="email" type="email" />
+
     @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
-      <div style="color:red;">
-        נא להזין אימייל תקין.
-      </div>
+    <div style="color:red;">
+      נא להזין אימייל תקין.
+    </div>
     }
   </div>
 
   <div>
-    <label for="password">סיסמה</label><br/>
-    <input id="password" formControlName="password" type="password"/>
-    
+    <label for="password">סיסמה</label><br />
+    <input id="password" formControlName="password" type="password" />
+
     @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
-      <div style="color:red;">
-        סיסמה חובה ולפחות 4 תווים.
-      </div>
+    <div style="color:red;">
+      סיסמה חובה ולפחות 4 תווים.
+    </div>
     }
   </div>
-
-  <!-- <div>
-    <label for="confirmPassword">אימות סיסמה</label><br/>
-    <input id="confirmPassword" formControlName="confirmPassword" type="password"/>
-    
-    @if (registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
-      <div style="color:red;">
-        הסיסמאות אינן תואמות.
-      </div>
-    }
-  </div> -->
 
   <button type="submit" [disabled]="registerForm.invalid">הרשם</button>
 </form>
 
 <p>כבר יש לך חשבון? </p>
-  <a routerLinkActive="active" routerLink="/login">התחבר</a>
+<a routerLinkActive="active" routerLink="/login">התחבר</a>
 <router-outlet></router-outlet>

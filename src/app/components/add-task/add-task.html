@@ -1,12 +1,11 @@
-  @if(projectId()){<button (click)="navigateToAllTasks()">כל המשימות שבפרויקט</button>}
-  @else{<button (click)="navigateToAllTasks()">כל המשימות</button>}
+@if(projectId()){<button (click)="navigateToAllTasks()">כל המשימות שבפרויקט</button>}
+@else{<button (click)="navigateToAllTasks()">כל המשימות</button>}
 
 <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
   @if(!projectId())
   {
   <label for="projectId">בחר פרויקט</label><br />
   <select id="projectId" formControlName="projectId">
-    <!-- <option value="">בחר פרויקט</option> -->
     @for(project of projects();track project.id){
     <option [value]=project.id!>{{project.name}}</option>
     }
@@ -16,16 +15,6 @@
     בחירת פרויקט חובה.
   </div>
   }
-  <!-- <div>
-    <label for="projectId">מזהה פרויקט</label><br/>
-    <input id="projectId" formControlName="projectId"/>
-    
-    @if (addTaskForm.get('projectId')?.touched && addTaskForm.get('projectId')?.invalid) {
-      <div style="color:red;">
-        מזהה קבוצה חובה.
-      </div>
-    }
-  </div> -->
   }
   @else{
   <input formControlName="projectId" type="hidden" />
@@ -44,12 +33,6 @@
   <div>
     <label for="description">תיאור</label><br />
     <input id="description" formControlName="description" />
-    <!--     
-    @if (addProjectForm.get('description')?.touched && addProjectForm.get('description')?.invalid) {
-      <div style="color:red;">
-        תיאור חובה.
-      </div>
-    } -->
   </div>
 
   <div>
@@ -73,13 +56,6 @@
   <div>
     <label for="dueDate">תאריך יעד</label><br />
     <input id="dueDate" formControlName="dueDate" type="date" />
-
-    <!-- @if (addTaskForm.get('dueDate')?.touched ) { //// ???
-      <div style="color:red;">
-      {{addTaskForm.get('dueDate')?.value}}
-        תיאור חובה.
-      </div>
-    }  -->
   </div>
 
   <button type="submit" [disabled]="addTaskForm.invalid">הוסף משימה</button>

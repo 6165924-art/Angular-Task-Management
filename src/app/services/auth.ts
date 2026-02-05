@@ -85,6 +85,7 @@ export class Auth {
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('task');
     this.userBehaviorSubject.next(null);
     this.router.navigate(['/login']);
   }

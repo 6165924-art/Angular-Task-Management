@@ -3,11 +3,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Teams } from '../../services/teams';
 import { CommonModule } from '@angular/common';
 import { AddMember } from '../add-member/add-member';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-add-team',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
   templateUrl: './add-team.html',
   styleUrl: './add-team.css',
 })

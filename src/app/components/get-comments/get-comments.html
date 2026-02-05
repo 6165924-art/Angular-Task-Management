@@ -9,11 +9,11 @@
     @for(comment of comments(); track comment.id) {
     <!-- @if(taskId == null||taskId ==comment.task_id){ -->
     <li style="border:1px solid black; margin:10px; padding:10px;">
-        <p>task id: {{comment.task_id}}</p>
+        <!-- <p>task id: {{comment.task_id}}</p> -->
         <p>user id: {{comment.user_id}}</p>
-        <h3>Comment ID: {{comment.id}}</h3>
+        <h4>Comment ID: {{comment.id}}</h4>
         <p>{{comment.body}}</p>
-        <p>Created at: {{comment.created_at}}</p>
+        <p>created at: {{comment.created_at}}</p>
     </li>
     }
     <!-- } -->

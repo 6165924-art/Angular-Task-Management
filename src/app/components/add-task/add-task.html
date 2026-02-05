@@ -1,6 +1,22 @@
-<form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+  @if(projectId()){<button (click)="navigateToAllTasks()">כל המשימות שבפרויקט</button>}
+  @else{<button (click)="navigateToAllTasks()">כל המשימות</button>}
 
-  <div>
+<form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+  @if(!projectId())
+  {
+  <label for="projectId">בחר פרויקט</label><br />
+  <select id="projectId" formControlName="projectId">
+    <!-- <option value="">בחר פרויקט</option> -->
+    @for(project of projects();track project.id){
+    <option [value]=project.id!>{{project.name}}</option>
+    }
+  </select>
+  @if (addTaskForm.get('projectId')?.touched && addTaskForm.get('projectId')?.invalid) {
+  <div style="color:red;">
+    בחירת פרויקט חובה.
+  </div>
+  }
+  <!-- <div>
     <label for="projectId">מזהה פרויקט</label><br/>
     <input id="projectId" formControlName="projectId"/>
     
@@ -9,30 +25,62 @@
         מזהה קבוצה חובה.
       </div>
     }
-  </div>
-
+  </div> -->
+  }
+  @else{
+  <input formControlName="projectId" type="hidden" />
+  }
   <div>
-    <label for="title">כותרת</label><br/>
-    <input id="title" formControlName="title"/>
-    
+    <label for="title">כותרת</label><br />
+    <input id="title" formControlName="title" />
+
     @if (addTaskForm.get('title')?.touched && addTaskForm.get('title')?.invalid) {
-      <div style="color:red;">
-        כותרת חובה ולפחות 2 תווים.
-      </div>
+    <div style="color:red;">
+      כותרת חובה ולפחות 2 תווים.
+    </div>
     }
   </div>
 
   <div>
-    <label for="description">תיאור</label><br/>
-    <input id="description" formControlName="description"/>
-<!--     
+    <label for="description">תיאור</label><br />
+    <input id="description" formControlName="description" />
+    <!--     
     @if (addProjectForm.get('description')?.touched && addProjectForm.get('description')?.invalid) {
       <div style="color:red;">
         תיאור חובה.
       </div>
     } -->
   </div>
-   
+
+  <div>
+    <label for="status">סטטוס</label><br />
+    <select id="status" formControlName="status">
+      <option value="todo">todo</option>
+      <option value="in progress">in progress</option>
+      <option value="done">done</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="priority">עדיפות</label><br />
+    <select id="priority" formControlName="priority">
+      <option value="low">low</option>
+      <option value="normal">normal</option>
+      <option value="high">high</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="dueDate">תאריך יעד</label><br />
+    <input id="dueDate" formControlName="dueDate" type="date" />
+
+    <!-- @if (addTaskForm.get('dueDate')?.touched ) { //// ???
+      <div style="color:red;">
+      {{addTaskForm.get('dueDate')?.value}}
+        תיאור חובה.
+      </div>
+    }  -->
+  </div>
+
   <button type="submit" [disabled]="addTaskForm.invalid">הוסף משימה</button>
 </form>
-

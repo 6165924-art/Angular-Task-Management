@@ -1,4 +1,7 @@
 <button (click)="navigateToAddTask()">הוספת משימה</button>
+@if(this.projectId()){
+<button (click)="navigateToAllProjectsInTheTeam()">כל הפרויקטים שבקבוצה</button>
+}
 <div>
   @if(isLouding()) {
   <p>טוען...</p>
@@ -16,13 +19,17 @@
       @for(task of todoTasks(); track task.id) {
       <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
-        <p>project id: {{task.project_id}}</p>
-        <h3>Task ID: {{task.id}}</h3>
+        <!-- <p>project id: {{task.project_id}}</p> -->
+        <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
-        <p>Description: {{task.description}}</p>
-        <p>Status: {{task.status}}</p>
+        @if(task.description){<p>Description: {{task.description}}</p>}
+        <!-- <p>Status: {{task.status}}</p> -->
+        <p>Priority: {{task.priority}}</p>
+        <p>Created At: {{task.created_at}}</p>
+        @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}
+        @if(task.due_date){<p>Due Date: {{task.due_date}}</p>}
         <button (click)="deleteTask(task.id!)">מחק</button>
-        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <button (click)="navigateToUpdateTask(task.id!,task)">ערוך משימה</button>
         <hr>
         <app-get-comments [taskId]="task.id!"></app-get-comments>
       </li>
@@ -38,13 +45,16 @@
       @for(task of inProgressTasks(); track task.id) {
       <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
-        <p>project id: {{task.project_id}}</p>
-        <h3>Task ID: {{task.id}}</h3>
+        <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
-        <p>Description: {{task.description}}</p>
-        <p>Status: {{task.status}}</p>
+        @if(task.description){<p>Description: {{task.description}}</p>}
+        <!-- <p>Status: {{task.status}}</p> -->
+        <p>Priority: {{task.priority}}</p>
+        <p>Created At: {{task.created_at}}</p>
+        @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}
+        @if(task.due_date){<p>Due Date: {{task.due_date}}</p>}
         <button (click)="deleteTask(task.id!)">מחק</button>
-        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <button (click)="navigateToUpdateTask(task.id!,task)">ערוך משימה</button>
         <hr>
         <app-get-comments [taskId]="task.id!"></app-get-comments>
       </li>
@@ -60,13 +70,16 @@
       @for(task of doneTasks(); track task.id) {
       <!-- @if(projectId() == null||projectId() ==task.project_id){ -->
       <li style="border:1px solid black; margin:10px; padding:10px;">
-        <p>project id: {{task.project_id}}</p>
-        <h3>Task ID: {{task.id}}</h3>
+        <h4>Task ID: {{task.id}}</h4>
         <p>Title: {{task.title}}</p>
-        <p>Description: {{task.description}}</p>
-        <p>Status: {{task.status}}</p>
+        @if(task.description){<p>Description: {{task.description}}</p>}
+        <!-- <p>Status: {{task.status}}</p> -->
+        <p>Priority: {{task.priority}}</p>
+        <p>Created At: {{task.created_at}}</p>
+        @if(task.created_at!=task.updated_at){<p>Update At: {{task.updated_at}}</p>}
+        @if(task.due_date){<p>Due Date: {{task.due_date}}</p>}
         <button (click)="deleteTask(task.id!)">מחק</button>
-        <button (click)="navigateToUpdateTask(task.id!)">ערוך משימה</button>
+        <button (click)="navigateToUpdateTask(task.id!,task)">ערוך משימה</button>
         <hr>
         <app-get-comments [taskId]="task.id!"></app-get-comments>
       </li>

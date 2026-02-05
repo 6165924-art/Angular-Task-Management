@@ -27,12 +27,16 @@ export class GetTasks implements OnInit {
   navigateToAddTask() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
-
+  navigateToAllProjectsInTheTeam() {
+    this.router.navigate(['../../'], { relativeTo: this.route });
+  }
   // navigateToProjects(teamId: number) {
   //   this.router.navigate(['/projects', teamId, 'projects']);
   // }
-  navigateToUpdateTask(taskId: number) {
-    this.router.navigate([`${taskId}/update`],{ relativeTo: this.route });
+  navigateToUpdateTask(taskId: number, task: Task) {
+    localStorage.setItem('task', JSON.stringify(task));
+    this.router.navigate([`${taskId}/update`], { relativeTo: this.route });
+    // this.router.navigate([`${taskId}/update`],{ relativeTo: this.route,state:{task} });
     // this.router.navigate([`/tasks/${taskId}/update`]);
   }
 
@@ -60,16 +64,16 @@ export class GetTasks implements OnInit {
   loudTasks() {
     this.isLouding.set(true);
     this.error.set(null);
-    this.taskService.getTasks().subscribe({
+    this.taskService.getTasks(this.projectId()).subscribe({
       next: (res) => {
-        if (this.projectId()) {
-          const filteredTasks = res.filter(
-            task => task.project_id == this.projectId()
-          );
-          this.tasks.set(filteredTasks);
-        }
-        else
-          this.tasks.set(res);
+        // if (this.projectId()) {
+        //   const filteredTasks = res.filter(
+        //     task => task.project_id == this.projectId()
+        //   );
+        //   this.tasks.set(filteredTasks);
+        // }
+        // else
+        this.tasks.set(res);
         // "todo" | "in progress" | "done"
         const todoTasks = this.tasks().filter(
           task => task.status == 'todo'

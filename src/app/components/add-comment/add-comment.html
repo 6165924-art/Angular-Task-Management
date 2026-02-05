@@ -13,7 +13,8 @@
 
   <div>
     <label for="body">תוכן ההערה</label><br/>
-    <input id="body" formControlName="body"/>
+    <textarea id="body" formControlName="body" type="text"></textarea>
+    <!-- <input id="body" formControlName="body" type="text"/> -->
     
     @if (addCommentForm.get('body')?.touched && addCommentForm.get('body')?.invalid) {
       <div style="color:red;">

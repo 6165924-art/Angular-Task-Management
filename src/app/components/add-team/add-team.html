@@ -1,16 +1,17 @@
+<a routerLinkActive="active" routerLink="/teams">כל הקבוצות</a>
+<router-outlet></router-outlet>
 <form [formGroup]="addTeamForm" (ngSubmit)="onSubmit()">
 
   <div>
-    <label for="name">שם קבוצה</label><br/>
-    <input id="name" formControlName="name"/>
-    
+    <label for="name">שם קבוצה</label><br />
+    <input id="name" formControlName="name" />
+
     @if (addTeamForm.get('name')?.touched && addTeamForm.get('name')?.invalid) {
-      <div style="color:red;">
-        שם קבוצה חובה ולפחות 2 תווים.
-      </div>
+    <div style="color:red;">
+      שם קבוצה חובה ולפחות 2 תווים.
+    </div>
     }
   </div>
 
   <button type="submit" [disabled]="addTeamForm.invalid">הוסף קבוצה</button>
 </form>
-

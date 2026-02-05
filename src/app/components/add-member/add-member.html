@@ -1,17 +1,18 @@
+  <button (click)="navigateToAllProject()">כל הפרויקטים שבקבוצה</button>
+
 <form [formGroup]="addMemberForm" (ngSubmit)="onSubmit()">
 
   <div>
-    <label for="userId">מזהה משתמש</label><br/>
-    <input id="userId" formControlName="userId" type="text"/>
+    <label for="userId">מזהה משתמש</label><br />
+    <input id="userId" formControlName="userId" type="number" />
 
     @if (addMemberForm.get('userId')?.touched&&addMemberForm.get('userId')?.invalid ) {
-      <div style="color:red;">
-        מזהה משתמש חובה.
-      </div>
+    <div style="color:red;">
+      מזהה משתמש חובה.
+    </div>
     }
   </div>
 
-  <button type="submit" >הוסף חבר קבוצה</button>
+  <button type="submit">הוסף חבר קבוצה</button>
   <!-- <button type="submit" [disabled]="addMemberForm.invalid">הוסף משתמש לקבוצה</button> -->
 </form>
-

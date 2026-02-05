@@ -1,6 +1,7 @@
 <ul>
   <button (click)="navigateToAddProject()">הוספת פרויקט</button>
    <button (click)="navigateToAddMember()">הוספת חבר בקבוצה</button>
+   <button (click)="navigateToAllTeams()">כל הקבוצות</button>
 @if(isLouding()) {
      <p>טוען...</p>
  }
@@ -11,8 +12,8 @@
   <!-- @if(teamId() == null||teamId() ==project.team_id){ -->
 
   <li style="border:1px solid black; margin:10px; padding:10px;">
-    <p>team id: {{project.team_id}}</p>
-    <h3>Project ID: {{project.id}}</h3>
+    <!-- <p>team id: {{project.team_id}}</p> -->
+    <h4>Project ID: {{project.id}}</h4>
     <p>Name: {{project.name}}</p>
     @if(project.description){
     <p>Description: {{project.description}}</p>}

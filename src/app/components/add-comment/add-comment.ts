@@ -22,8 +22,8 @@ export class AddComment {
   });
   error = signal<string | null>(null);
 
-  ngOnInit(){
-  this.route.paramMap.subscribe((params) => {
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
       console.log('ניתוב: ', this.route);
 
       const id = params.get('taskId');
@@ -31,19 +31,20 @@ export class AddComment {
         this.taskId.set(parseInt(id));
       }
     });
-}
+  }
+
   onSubmit() {
     console.log('in onsubmit');
     // const project:Project = {team_id: this.addProjectForm.value.teamId!, name: this.addProjectForm.value.name!, description: this.addProjectForm.value.description!};
     const { body } = this.addCommentForm.value;
     if (typeof body == 'string')
-      this.commentService.addComment({ taskId:this.taskId()!, body }).subscribe({
+      this.commentService.addComment({ taskId: this.taskId()!, body }).subscribe({
         // this.auth.register({name,email,password}).subscribe({
         next: (res) => {
           this.error.set(null);
           console.log('Add Comment successful', res);
           console.log('ניתוב בתוך הנקסט: ', this.route);
-          this.router.navigate(['../../../'])
+          this.router.navigate(['../../../'], { relativeTo: this.route })
         },
         error: (err) => {
           this.error.set('Add Comment failed. Please try again later.');

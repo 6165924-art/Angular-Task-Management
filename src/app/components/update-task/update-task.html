@@ -12,27 +12,50 @@
   </div> -->
 
   <div>
-    <label for="title">כותרת</label><br/>
-    <input id="title" formControlName="title"/>
-    
+    <!-- <label formControlName="title">כותרת</label><br /> -->
+    <label for="title">כותרת</label><br />
+    <input id="title" formControlName="title" />
+
     @if (updateTaskForm.get('title')?.touched && updateTaskForm.get('title')?.invalid) {
-      <div style="color:red;">
-        כותרת חובה ולפחות 2 תווים.
-      </div>
+    <div style="color:red;">
+      כותרת חובה ולפחות 2 תווים.
+    </div>
     }
   </div>
 
   <div>
-    <label for="description">תיאור</label><br/>
-    <input id="description" formControlName="description"/>
-<!--     
+    <label for="description">תיאור</label><br />
+    <input id="description" formControlName="description" />
+    <!--     
     @if (addProjectForm.get('description')?.touched && addProjectForm.get('description')?.invalid) {
       <div style="color:red;">
         תיאור חובה.
       </div>
     } -->
   </div>
-   
+
+  <div>
+    <label for="status">סטטוס</label><br />
+    <select id="status" formControlName="status">
+      <option value="todo">todo</option>
+      <option value="in progress">in progress</option>
+      <option value="done">done</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="priority">עדיפות</label><br />
+    <select id="priority" formControlName="priority">
+      <option value="low">low</option>
+      <option value="normal">normal</option>
+      <option value="high">high</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="dueDate">תאריך יעד</label><br />
+    <input id="dueDate" formControlName="dueDate" type="date" />
+  </div>
+
   <button type="submit" [disabled]="updateTaskForm.invalid">עדכן משימה</button>
 </form>
-

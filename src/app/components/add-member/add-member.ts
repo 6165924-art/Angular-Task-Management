@@ -1,12 +1,12 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Teams } from '../../services/teams';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-add-member',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterOutlet,RouterLink,RouterLinkActive],
   templateUrl: './add-member.html',
   styleUrl: './add-member.css',
 })
@@ -22,6 +22,10 @@ export class AddMember {
     userId: new FormControl('', [Validators.required])
   });
   error = signal<string | null>(null);
+
+navigateToAllProject(){
+      this.router.navigate(['../../projects'], { relativeTo: this.route });
+}
 
 ngOnInit(){
   this.route.paramMap.subscribe((params) => {

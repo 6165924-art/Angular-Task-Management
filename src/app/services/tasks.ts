@@ -12,16 +12,19 @@ export class Tasks {
   // private url = 'http://localhost:3000/api/tasks'; // לעשות עם קובץ סביבה (.env)???
   private httpClient = inject(HttpClient);
 
-  getTasks(): Observable<Task[]> {
+  getTasks(projectId:number|null): Observable<Task[]> {
+    if(projectId){
+      return this.httpClient.get<Task[]>(`${this.url}?projectId=${projectId}`);
+    }
     return this.httpClient.get<Task[]>(this.url);
   }
 
-  addTask(task: { projectId: number, title: string, description: string | null }): Observable<Task> {
+  addTask(task: { projectId: number, title: string, description: string | null,status: string | null,priority: string | null,dueDate: string | null }): Observable<Task> {
     console.log('in addTask service with task:', task);
     return this.httpClient.post<Task>(this.url, task);
   }
 
-  updateTask(task: { id: number, title: string, description: string | null }): Observable<Task> {
+  updateTask(task: { id: number, title: string, description: string | null, status: string | null , priority: string | null , due_date: string | null  }): Observable<Task> {
     console.log('in updateTask service with task:', task);
     return this.httpClient.patch<Task>(`${this.url}/${task.id}`, task);
   }

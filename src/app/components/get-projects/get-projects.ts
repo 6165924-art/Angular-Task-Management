@@ -7,8 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-projects',
-  standalone:true,
-  imports: [CommonModule,AddProject],
+  standalone: true,
+  imports: [CommonModule, AddProject],
   templateUrl: './get-projects.html',
   styleUrl: './get-projects.css',
 })
@@ -21,26 +21,29 @@ export class GetProjects {
   projects = signal<Project[]>([]);
   isLouding = signal<boolean>(false);
   error = signal<string | null>(null);
-    teamId=signal<number | null>(null);
+  teamId = signal<number | null>(null);
 
 
   //   navigateToTasks() {
   //   this.router.navigate(['/tasks']);
   // }
-    // this.router.navigate(['new'], { relativeTo: this.activatedRoute });
+  // this.router.navigate(['new'], { relativeTo: this.activatedRoute });
 
   navigateToTasks(projectId: number) {
     // this.router.navigate(['project', projectId, 'tasks']);
     this.router.navigate([projectId, 'tasks'], { relativeTo: this.route });
   }
 
-  navigateToAddProject(){
+  navigateToAddProject() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  navigateToAddMember(){
-      console.log('teamId value:', this.teamId()); 
+  navigateToAddMember() {
+    console.log('teamId value:', this.teamId());
     this.router.navigate([`/teams/${this.teamId()}/member/new`]);
+  }
+    navigateToAllTeams() {
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   ngOnInit() {
@@ -62,11 +65,12 @@ export class GetProjects {
     this.projectService.getProjects().subscribe({
       next: (res) => {
         const filteredProjects = res.filter(
-          project=>project.team_id==this.teamId()
+          project => project.team_id == this.teamId()
         );
         this.projects.set(filteredProjects);
         console.log('projects:', this.projects());
         this.isLouding.set(false);
+        // localStorage.setItem('projects',JSON.stringify(res)) //// ???
       },
       error: (err) => {
         this.error.set('Failed to load projects');

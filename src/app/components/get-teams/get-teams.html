@@ -10,8 +10,10 @@
  }
  @for(team of teams();track team.id) {
    <li style="border:1px solid black; margin:10px; padding:10px;">
-     <h3>Team ID: {{team.id}}</h3>
-     <p>Name: {{team.name}}</p>
+     <h4>Team ID: {{team.id}}</h4>
+     <h2>Name: {{team.name}}</h2>
+     <p>Created At: {{team.created_at}}</p>
+     <p>Members Count: {{team.members_count}}</p>
      <!-- <app-add-member></app-add-member> -->
          <!-- <app-add-member [teamId]="team.id"></app-add-member> -->
            <button (click)="navigateToProjects(team.id)">כל הפרויקטים</button>

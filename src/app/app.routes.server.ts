@@ -64,27 +64,6 @@ export const serverRoutes: ServerRoute[] = [
       return [{ teamId: '1' }];
     }
   },
-  // {
-  //   path: 'project/:projectId/tasks',
-  //   renderMode: RenderMode.Prerender,
-  //   getPrerenderParams: async () => {
-  //     return [{ projectId: '1' }];
-  //   }
-  // },
-  // {
-  //   path: 'task/:taskId/update',
-  //   renderMode: RenderMode.Prerender,
-  //   getPrerenderParams: async () => {
-  //     return [{ taskId: '1' }];
-  //   }
-  // },
-  // {
-  //   path: 'team/:this.teamId/member/new',
-  //   renderMode: RenderMode.Prerender,
-  //   getPrerenderParams: async () => {
-  //     return [{ teamId: '1' }];
-  //   }
-  // },
   {
     path: '**',
     renderMode: RenderMode.Prerender

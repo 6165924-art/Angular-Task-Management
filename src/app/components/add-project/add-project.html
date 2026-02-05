@@ -1,6 +1,8 @@
+  <button (click)="navigateToAllProject()">כל הפרויקטים שבקבוצה</button>
+
 <form [formGroup]="addProjectForm" (ngSubmit)="onSubmit()">
 
-  <div>
+  <!-- <div>
     <label for="teamId">מזהה קבוצה</label><br/>
     <input id="teamId" formControlName="teamId"/>
     
@@ -9,7 +11,7 @@
         מזהה קבוצה חובה.
       </div>
     }
-  </div>
+  </div> -->
 
   <div>
     <label for="name">שם פרויקט</label><br/>

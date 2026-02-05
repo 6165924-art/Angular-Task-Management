@@ -85,7 +85,9 @@ navigateToAllTasks(){
     // const project_id = projectId ? parseInt(projectId) : this.projectId()!
 
     if (typeof projectId == 'string'&&typeof title == 'string')
-      this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status:status||null,priority:priority||null,dueDate:dueDate||null}).subscribe({
+      this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status:status||null,priority:priority||null,due_date:dueDate||null}).subscribe({
+      // this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null, status:status||null,priority:priority||null,due_date:dueDate||null}).subscribe({
+      // this.taskService.addTask({ projectId: parseInt(projectId), title, description: description || null,due_date:dueDate||null}).subscribe({
         // this.auth.register({name,email,password}).subscribe({
         next: (res) => {
           this.error.set(null);

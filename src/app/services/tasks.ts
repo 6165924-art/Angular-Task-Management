@@ -19,7 +19,11 @@ export class Tasks {
     return this.httpClient.get<Task[]>(this.url);
   }
 
-  addTask(task: { projectId: number, title: string, description: string | null,status: string | null,priority: string | null,dueDate: string | null }): Observable<Task> {
+  // addTask(task: { projectId: number, title: string, description: string | null,status?: string ,priority?: string ,due_date: string | null }): Observable<Task> {
+  addTask(task: { projectId: number, title: string, description: string | null,status: string | null,priority: string | null,due_date: string | null }): Observable<Task> {
+  // addTask(task: { projectId: number, title: string, description: string | null,due_date: string | null }): Observable<Task> {
+  if(!task.status)task.status='todo'
+  if(!task.priority)task.priority='normal'
     console.log('in addTask service with task:', task);
     return this.httpClient.post<Task>(this.url, task);
   }

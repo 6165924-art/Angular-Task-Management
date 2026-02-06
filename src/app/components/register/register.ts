@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../services/auth';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/userModel';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,9 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    RouterOutlet,
     RouterLink,
-    RouterLinkActive,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

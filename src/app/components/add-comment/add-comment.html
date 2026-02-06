@@ -1,14 +1,35 @@
-<form [formGroup]="addCommentForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="body">תוכן ההערה</label><br />
-    <textarea id="body" formControlName="body" type="text"></textarea>
-
-    @if (addCommentForm.get('body')?.touched && addCommentForm.get('body')?.invalid) {
-    <div style="color:red;">
-      תוכן ההערה חובה ולפחות 2 תווים.
+<div class="add-comment-container">
+  <!-- Error Alert -->
+  @if(error()) {
+    <div class="error-alert">
+      <mat-icon>error</mat-icon>
+      <span>{{ error() }}</span>
     </div>
-    }
-  </div>
+  }
 
-  <button type="submit" [disabled]="addCommentForm.invalid">הוסף הערה</button>
-</form>
+  <!-- Comment Form -->
+  <form [formGroup]="addCommentForm" (ngSubmit)="onSubmit()" class="comment-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>הוסף הערה</mat-label>
+      <textarea matInput formControlName="body" rows="3" dir="auto"></textarea>
+      <mat-icon matPrefix>comment</mat-icon>
+      @if (addCommentForm.get('body')?.touched && addCommentForm.get('body')?.invalid) {
+        <mat-error>תוכן ההערה חובה ולפחות 2 תווים</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="accent" 
+              type="submit" 
+              [disabled]="addCommentForm.invalid || isLoading()">
+        @if (isLoading()) {
+          <mat-icon class="loading-spinner">sync</mat-icon>
+          משדרת...
+        } @else {
+          <mat-icon>send</mat-icon>
+          שלח הערה
+        }
+      </button>
+    </div>
+  </form>
+</div>

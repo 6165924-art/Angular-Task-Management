@@ -1,0 +1,118 @@
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: linear-gradient(135deg, #4a5899 0%, #5a2d82 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f0e6ff;
+}
+
+.title-icon {
+  font-size: 28px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f0e6ff;
+  font-weight: 500;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.sidenav {
+  width: 280px;
+  direction: rtl;
+}
+
+.sidenav-header {
+  padding: 20px;
+  background: linear-gradient(135deg, #4a5899 0%, #5a2d82 100%);
+  color: #f0e6ff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-radius: 0 0 8px 0;
+}
+
+.sidenav-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.sidenav-logo {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.sidenav mat-nav-list {
+  direction: rtl;
+}
+
+.nav-item {
+  margin: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(103, 58, 183, 0.1);
+}
+
+.nav-item.active {
+  background-color: rgba(103, 58, 183, 0.15);
+  color: #673ab7;
+  font-weight: 600;
+}
+
+.logout-item {
+  color: #d32f2f;
+  margin-top: 20px;
+}
+
+.logout-item:hover {
+  background-color: rgba(211, 47, 47, 0.1);
+}
+
+.auth-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4a5899 0%, #5a2d82 100%);
+}

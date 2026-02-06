@@ -1,1 +1,18 @@
-<h1>404 - not found</h1>
+<div class="not-found-container">
+  <mat-card class="not-found-card">
+    <mat-card-content>
+      <div class="error-icon-wrapper">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      
+      <h1 class="error-code">404</h1>
+      <h2 class="error-title">עמוד לא נמצא</h2>
+      <p class="error-message">סוריי, העמוד שחיפשת לא קיים או הוסר.</p>
+      
+      <button mat-raised-button color="primary" (click)="goHome()" class="go-home-btn">
+        <mat-icon>arrow_back</mat-icon>
+        חזור לדף הבית
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

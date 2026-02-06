@@ -1,22 +1,96 @@
-<ul>
-  <button (click)="navigateToAddProject()">הוספת פרויקט</button>
-  <button (click)="navigateToAddMember()">הוספת חבר בקבוצה</button>
-  <button (click)="navigateToAllTeams()">כל הקבוצות</button>
-  @if(isLouding()) {
-  <p>טוען...</p>
-  }
-  @else if(projects().length === 0) {
-  <p>לא קיימים פרויקטים להצגה.</p>
-  }
-  @for(project of projects();track project.id) {
+<div class="projects-container">
+  <!-- Header עם כפתורי ניווט -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>folder_open</mat-icon>
+        הפרויקטים של הקבוצה
+      </h1>
+      <div class="toolbar-actions">
+        <button mat-raised-button color="accent" (click)="navigateToAddProject()"
+                matTooltip="הוסף פרויקט חדש">
+          <mat-icon>add_circle</mat-icon>
+          פרויקט חדש
+        </button>
+        <button mat-raised-button color="primary" (click)="navigateToAddMember()"
+                matTooltip="הוסף חבר לקבוצה">
+          <mat-icon>person_add</mat-icon>
+          הוסף חבר
+        </button>
+        <button mat-icon-button (click)="navigateToAllTeams()" matTooltip="חזור לקבוצות">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
 
-  <li style="border:1px solid black; margin:10px; padding:10px;">
-    <h4>Project ID: {{project.id}}</h4>
-    <p>Name: {{project.name}}</p>
-    @if(project.description){
-    <p>Description: {{project.description}}</p>}
-    <p>created at: {{project.created_at}}</p>
-    <button (click)="navigateToTasks(project.id!)">צפייה במשימות הפרויקט</button>
-  </li>
+  <!-- מצב טעינה -->
+  @if(isLouding()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>טוען פרויקטים...</p>
+    </div>
+  } @else if(error()) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <div class="error-content">
+          <mat-icon class="error-icon">error_outline</mat-icon>
+          <p class="error-text">{{ error() }}</p>
+          <button mat-raised-button color="primary" (click)="retry()">
+            <mat-icon>refresh</mat-icon>
+            נסה שוב
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else if(projects().length === 0) {
+    <mat-card class="empty-state-card">
+      <mat-card-content>
+        <mat-icon class="empty-icon">folder_off</mat-icon>
+        <p class="empty-text">אין פרויקטים להצגה כרגע</p>
+        <p class="empty-subtext">צור את הפרויקט הראשון שלך להתחלה</p>
+        <button mat-raised-button color="accent" (click)="navigateToAddProject()">
+          <mat-icon>add</mat-icon>
+          צור פרויקט ראשון
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <!-- רשימת פרויקטים -->
+    <div class="projects-grid">
+      @for(project of projects(); track project.id) {
+        <mat-card class="project-card">
+          <mat-card-header>
+            <div class="project-header-content">
+              <div class="project-icon">
+                <mat-icon>folder_special</mat-icon>
+              </div>
+              <div class="project-info">
+                <h3 class="project-name">{{ project.name }}</h3>
+                <p class="project-date">
+                  <mat-icon>calendar_today</mat-icon>
+                  {{ project.created_at | date: 'dd/MM/yyyy' }}
+                </p>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            @if(project.description) {
+              <p class="project-description">{{ project.description }}</p>
+            }
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-raised-button color="primary" 
+                    (click)="navigateToTasks(project.id!)"
+                    class="full-width-btn">
+              <mat-icon>task_alt</mat-icon>
+              צפייה במשימות
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
   }
-</ul>
+</div>

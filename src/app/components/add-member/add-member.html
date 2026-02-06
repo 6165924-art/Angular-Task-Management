@@ -1,17 +1,61 @@
-<button (click)="navigateToAllProject()">כל הפרויקטים שבקבוצה</button>
-
-<form [formGroup]="addMemberForm" (ngSubmit)="onSubmit()">
-
-  <div>
-    <label for="userId">מזהה משתמש</label><br />
-    <input id="userId" formControlName="userId" type="number" />
-
-    @if (addMemberForm.get('userId')?.touched&&addMemberForm.get('userId')?.invalid ) {
-    <div style="color:red;">
-      מזהה משתמש חובה.
+<div class="add-member-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>person_add</mat-icon>
+        הוסף חבר לקבוצה
+      </h1>
+      <button mat-icon-button (click)="navigateToAllProject()" matTooltip="חזור">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    }
-  </div>
+  </mat-toolbar>
 
-  <button type="submit">הוסף חבר קבוצה</button>
-</form>
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      @if(error()) {
+        <div class="error-alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ error() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="addMemberForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>מזהה משתמש</mat-label>
+          <input matInput formControlName="userId" type="number" dir="ltr">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (addMemberForm.get('userId')?.touched && addMemberForm.get('userId')?.invalid) {
+            <mat-error>מזהה משתמש חובה</mat-error>
+          }
+        </mat-form-field>
+
+        <p class="help-text">
+          <mat-icon>info</mat-icon>
+          הזן את מזהה המשתמש של החבר שברצונך להוסיף לקבוצה
+        </p>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" 
+                  type="submit" 
+                  [disabled]="addMemberForm.invalid || isLoading()"
+                  class="submit-btn">
+            @if (isLoading()) {
+              <mat-icon class="loading-spinner">sync</mat-icon>
+              מוסיף...
+            } @else {
+              <mat-icon>person_add</mat-icon>
+              הוסף חבר
+            }
+          </button>
+          <button mat-stroked-button type="button" (click)="navigateToAllProject()">
+            <mat-icon>cancel</mat-icon>
+            ביטול
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

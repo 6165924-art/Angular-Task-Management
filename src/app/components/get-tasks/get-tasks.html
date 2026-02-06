@@ -1,4 +1,269 @@
-<button (click)="navigateToAddTask()">הוספת משימה</button>
+<div class="tasks-container">
+  <!-- Header עם כפתורי ניווט -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>ניהול משימות</h1>
+      <div class="toolbar-actions">
+        <button mat-raised-button color="accent" (click)="navigateToAddTask()">
+          <mat-icon>add_circle</mat-icon>
+          הוספת משימה חדשה
+        </button>
+        @if(this.projectId()) {
+          <button mat-raised-button color="primary" (click)="navigateToAllProjectsInTheTeam()">
+            <mat-icon>folder_open</mat-icon>
+            כל הפרויקטים בקבוצה
+          </button>
+        }
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- מצב טעינה -->
+  @if(isLouding()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>טוען משימות...</p>
+    </div>
+  } @else if(tasks().length === 0) {
+    <mat-card class="empty-state-card">
+      <mat-card-content>
+        <mat-icon class="empty-icon">inbox</mat-icon>
+        <p class="empty-text">אין משימות להצגה כרגע</p>
+        <button mat-raised-button color="accent" (click)="navigateToAddTask()">
+          צור משימה ראשונה
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <!-- תצוגת Kanban למשימות -->
+    <div class="kanban-board">
+      <!-- עמודה: למבצע -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <h2>
+            <mat-icon>assignment</mat-icon>
+            למבצע
+            <span class="task-count">{{ todoTasks().length }}</span>
+          </h2>
+        </mat-card-header>
+        <mat-card-content>
+          @if(todoTasks().length === 0) {
+            <p class="empty-column-text">אין משימות חדשות</p>
+          } @else {
+            <div class="tasks-list">
+              @for(task of todoTasks(); track task.id) {
+                <mat-card class="task-card" [ngClass]="'priority-' + task.priority">
+                  <mat-card-header class="task-header">
+                    <div class="task-title-section">
+                      <h3 class="task-title">{{ task.title }}</h3>
+                      <span class="priority-badge" [ngClass]="'priority-' + task.priority">
+                        {{ getPriorityLabel(task.priority!) }}
+                      </span>
+                    </div>
+                  </mat-card-header>
+
+                  <mat-card-content>
+                    @if(task.description) {
+                      <p class="task-description">{{ task.description }}</p>
+                    }
+
+                    <div class="task-metadata">
+                      <div class="metadata-item">
+                        <mat-icon>calendar_today</mat-icon>
+                        <span>{{ formatDate(task.created_at!) }}</span>
+                      </div>
+                      @if(task.due_date) {
+                        <div class="metadata-item" [ngClass]="isOverdue(task.due_date) ? 'overdue' : ''">
+                          <mat-icon>alarm</mat-icon>
+                          <span>{{ formatDate(task.due_date) }}</span>
+                        </div>
+                      }
+                      @if(task.created_at !== task.updated_at) {
+                        <div class="metadata-item updated">
+                          <mat-icon>update</mat-icon>
+                          <span>{{ formatDate(task.updated_at!) }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card-actions>
+                    <button mat-icon-button color="primary" 
+                            (click)="navigateToUpdateTask(task.id!, task)"
+                            matTooltip="ערוך משימה">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" 
+                            (click)="openDeleteDialog(task.id!, task.title)"
+                            matTooltip="מחק משימה">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card-actions>
+
+                  <!-- תגובות -->
+                  <mat-divider></mat-divider>
+                  <div class="comments-section">
+                    <app-get-comments [taskId]="task.id!"></app-get-comments>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <!-- עמודה: בתהליך -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <h2>
+            <mat-icon>hourglass_bottom</mat-icon>
+            בתהליך
+            <span class="task-count">{{ inProgressTasks().length }}</span>
+          </h2>
+        </mat-card-header>
+        <mat-card-content>
+          @if(inProgressTasks().length === 0) {
+            <p class="empty-column-text">אין משימות בתהליך</p>
+          } @else {
+            <div class="tasks-list">
+              @for(task of inProgressTasks(); track task.id) {
+                <mat-card class="task-card" [ngClass]="'priority-' + task.priority">
+                  <mat-card-header class="task-header">
+                    <div class="task-title-section">
+                      <h3 class="task-title">{{ task.title }}</h3>
+                      <span class="priority-badge" [ngClass]="'priority-' + task.priority">
+                        {{ getPriorityLabel(task.priority!) }}
+                      </span>
+                    </div>
+                  </mat-card-header>
+
+                  <mat-card-content>
+                    @if(task.description) {
+                      <p class="task-description">{{ task.description }}</p>
+                    }
+
+                    <div class="task-metadata">
+                      <div class="metadata-item">
+                        <mat-icon>calendar_today</mat-icon>
+                        <span>{{ formatDate(task.created_at!) }}</span>
+                      </div>
+                      @if(task.due_date) {
+                        <div class="metadata-item" [ngClass]="isOverdue(task.due_date) ? 'overdue' : ''">
+                          <mat-icon>alarm</mat-icon>
+                          <span>{{ formatDate(task.due_date) }}</span>
+                        </div>
+                      }
+                      @if(task.created_at !== task.updated_at) {
+                        <div class="metadata-item updated">
+                          <mat-icon>update</mat-icon>
+                          <span>{{ formatDate(task.updated_at!) }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card-actions>
+                    <button mat-icon-button color="primary" 
+                            (click)="navigateToUpdateTask(task.id!, task)"
+                            matTooltip="ערוך משימה">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" 
+                            (click)="openDeleteDialog(task.id!, task.title)"
+                            matTooltip="מחק משימה">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card-actions>
+
+                  <mat-divider></mat-divider>
+                  <div class="comments-section">
+                    <app-get-comments [taskId]="task.id!"></app-get-comments>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <!-- עמודה: הושלם -->
+      <mat-card class="kanban-column">
+        <mat-card-header>
+          <h2>
+            <mat-icon>check_circle</mat-icon>
+            הושלם
+            <span class="task-count">{{ doneTasks().length }}</span>
+          </h2>
+        </mat-card-header>
+        <mat-card-content>
+          @if(doneTasks().length === 0) {
+            <p class="empty-column-text">אין משימות שהושלמו</p>
+          } @else {
+            <div class="tasks-list">
+              @for(task of doneTasks(); track task.id) {
+                <mat-card class="task-card completed">
+                  <mat-card-header class="task-header">
+                    <div class="task-title-section">
+                      <h3 class="task-title">{{ task.title }}</h3>
+                      <span class="priority-badge" [ngClass]="'priority-' + task.priority">
+                        {{ getPriorityLabel(task.priority!) }}
+                      </span>
+                    </div>
+                  </mat-card-header>
+
+                  <mat-card-content>
+                    @if(task.description) {
+                      <p class="task-description">{{ task.description }}</p>
+                    }
+
+                    <div class="task-metadata">
+                      <div class="metadata-item">
+                        <mat-icon>calendar_today</mat-icon>
+                        <span>{{ formatDate(task.created_at!) }}</span>
+                      </div>
+                      @if(task.due_date) {
+                        <div class="metadata-item">
+                          <mat-icon>alarm</mat-icon>
+                          <span>{{ formatDate(task.due_date) }}</span>
+                        </div>
+                      }
+                      @if(task.created_at !== task.updated_at) {
+                        <div class="metadata-item updated">
+                          <mat-icon>update</mat-icon>
+                          <span>{{ formatDate(task.updated_at!) }}</span>
+                        </div>
+                      }
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card-actions>
+                    <button mat-icon-button color="primary" 
+                            (click)="navigateToUpdateTask(task.id!, task)"
+                            matTooltip="ערוך משימה">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" 
+                            (click)="openDeleteDialog(task.id!, task.title)"
+                            matTooltip="מחק משימה">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card-actions>
+
+                  <mat-divider></mat-divider>
+                  <div class="comments-section">
+                    <app-get-comments [taskId]="task.id!"></app-get-comments>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</div>
+
+<!-- <button (click)="navigateToAddTask()">הוספת משימה</button>
 @if(this.projectId()){
 <button (click)="navigateToAllProjectsInTheTeam()">כל הפרויקטים שבקבוצה</button>
 }
@@ -80,4 +345,4 @@
     </ul>
   </div>
   }
-</div>
+</div> -->

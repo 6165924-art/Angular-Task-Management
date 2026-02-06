@@ -1,42 +1,95 @@
-<form [formGroup]="updateTaskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">כותרת</label><br />
-    <input id="title" formControlName="title" />
-
-    @if (updateTaskForm.get('title')?.touched && updateTaskForm.get('title')?.invalid) {
-    <div style="color:red;">
-      כותרת חובה ולפחות 2 תווים.
+<div class="update-task-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>edit</mat-icon>
+        עדכן משימה
+      </h1>
+      <button mat-icon-button (click)="navigateToAllTasks()" matTooltip="חזור">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    }
-  </div>
+  </mat-toolbar>
 
-  <div>
-    <label for="description">תיאור</label><br />
-    <input id="description" formControlName="description" />
-  </div>
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      @if(error()) {
+        <div class="error-alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ error() }}</span>
+        </div>
+      }
 
-  <div>
-    <label for="status">סטטוס</label><br />
-    <select id="status" formControlName="status">
-      <option value="todo">todo</option>
-      <option value="in progress">in progress</option>
-      <option value="done">done</option>
-    </select>
-  </div>
+      <form [formGroup]="updateTaskForm" (ngSubmit)="onSubmit()">
+        <!-- Title -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>כותרת המשימה</mat-label>
+          <input matInput formControlName="title" dir="auto">
+          <mat-icon matPrefix>title</mat-icon>
+          @if (updateTaskForm.get('title')?.touched && updateTaskForm.get('title')?.invalid) {
+            <mat-error>כותרת חובה ולפחות 2 תווים</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label for="priority">עדיפות</label><br />
-    <select id="priority" formControlName="priority">
-      <option value="low">low</option>
-      <option value="normal">normal</option>
-      <option value="high">high</option>
-    </select>
-  </div>
+        <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>תיאור</mat-label>
+          <textarea matInput formControlName="description" rows="4" dir="auto"></textarea>
+          <mat-icon matPrefix>description</mat-icon>
+        </mat-form-field>
 
-  <div>
-    <label for="dueDate">תאריך יעד</label><br />
-    <input id="dueDate" formControlName="dueDate" type="date" />
-  </div>
+        <!-- Status and Priority Row -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>סטטוס</mat-label>
+            <mat-select formControlName="status">
+              @for(option of statusOptions; track option.value) {
+                <mat-option [value]="option.value">{{ option.label }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>assignment</mat-icon>
+          </mat-form-field>
 
-  <button type="submit" [disabled]="updateTaskForm.invalid">עדכן משימה</button>
-</form>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>עדיפות</mat-label>
+            <mat-select formControlName="priority">
+              @for(option of priorityOptions; track option.value) {
+                <mat-option [value]="option.value">{{ option.label }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>flag</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Due Date -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>תאריך יעד</mat-label>
+          <input matInput formControlName="dueDate" type="date" dir="ltr">
+          <mat-icon matPrefix>calendar_today</mat-icon>
+        </mat-form-field>
+
+        <!-- Buttons -->
+        <div class="form-actions">
+          <button mat-raised-button color="primary" 
+                  type="submit" 
+                  [disabled]="updateTaskForm.invalid || isLoading()"
+                  class="submit-btn">
+            @if (isLoading()) {
+              <mat-icon class="loading-spinner">sync</mat-icon>
+              מעדכן...
+            } @else {
+              <mat-icon>check_circle</mat-icon>
+              עדכן משימה
+            }
+          </button>
+          <button mat-stroked-button type="button" (click)="navigateToAllTasks()">
+            <mat-icon>cancel</mat-icon>
+            ביטול
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

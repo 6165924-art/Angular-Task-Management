@@ -1,0 +1,276 @@
+.projects-container {
+  direction: rtl;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.toolbar-header {
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
+  padding: 0 20px;
+
+  .toolbar-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: #f0e6ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
+
+/* מצב טעינה */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  gap: 20px;
+
+  p {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+/* כרטיס שגיאה */
+.error-card {
+  margin-top: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  border-right: 4px solid #d32f2f;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #d32f2f;
+}
+
+.error-text {
+  font-size: 18px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* כרטיס ריק */
+.empty-state-card {
+  margin-top: 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 40px 20px;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    .empty-icon {
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      color: #ccc;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      font-size: 18px;
+      color: #999;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .empty-subtext {
+      font-size: 14px;
+      color: #aaa;
+      margin: 0;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  }
+}
+
+/* רשימת פרויקטים */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.project-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: white;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+}
+
+mat-card-header {
+  padding: 20px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom: none;
+}
+
+.project-header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.project-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  mat-icon {
+    color: white;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.project-info {
+  flex: 1;
+  text-align: right;
+}
+
+.project-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.project-date {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+mat-card-content {
+  padding: 20px;
+  min-height: 60px;
+}
+
+.project-description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  text-align: right;
+}
+
+mat-card-actions {
+  padding: 16px 20px;
+  background: #fafafa;
+  border-top: 1px solid #eee;
+}
+
+.full-width-btn {
+  width: 100%;
+  height: 44px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 6px;
+  text-transform: none;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-content {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+
+    h1 {
+      width: 100%;
+    }
+
+    .toolbar-actions {
+      width: 100%;
+      flex-wrap: wrap;
+
+      button {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  }
+}

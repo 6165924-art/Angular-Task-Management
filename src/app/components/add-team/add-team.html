@@ -1,17 +1,56 @@
-<a routerLinkActive="active" routerLink="/teams">כל הקבוצות</a>
-<router-outlet></router-outlet>
-<form [formGroup]="addTeamForm" (ngSubmit)="onSubmit()">
-
-  <div>
-    <label for="name">שם קבוצה</label><br />
-    <input id="name" formControlName="name" />
-
-    @if (addTeamForm.get('name')?.touched && addTeamForm.get('name')?.invalid) {
-    <div style="color:red;">
-      שם קבוצה חובה ולפחות 2 תווים.
+<div class="add-team-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>group_add</mat-icon>
+        צור קבוצה חדשה
+      </h1>
+      <button mat-icon-button (click)="navigateToAllTeams()" matTooltip="חזור">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    }
-  </div>
+  </mat-toolbar>
 
-  <button type="submit" [disabled]="addTeamForm.invalid">הוסף קבוצה</button>
-</form>
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      @if(error()) {
+        <div class="error-alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ error() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="addTeamForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>שם הקבוצה</mat-label>
+          <input matInput formControlName="name" dir="auto">
+          <mat-icon matPrefix>group</mat-icon>
+          @if (addTeamForm.get('name')?.touched && addTeamForm.get('name')?.invalid) {
+            <mat-error>שם קבוצה חובה ולפחות 2 תווים</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" 
+                  type="submit" 
+                  [disabled]="addTeamForm.invalid || isLoading()"
+                  class="submit-btn">
+            @if (isLoading()) {
+              <mat-icon class="loading-spinner">sync</mat-icon>
+              יוצר...
+            } @else {
+              <mat-icon>add_circle</mat-icon>
+              צור קבוצה
+            }
+          </button>
+          <button mat-stroked-button type="button" (click)="navigateToAllTeams()">
+            <mat-icon>cancel</mat-icon>
+            ביטול
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

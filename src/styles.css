@@ -1,1 +1,188 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Material Design Color Scheme */
+:root {
+  --primary-color: #4a5899;
+  --primary-dark: #5a2d82;
+  --accent-color: #f093fb;
+  --success-color: #4caf50;
+  --danger-color: #f44336;
+  --warning-color: #ff9800;
+  --info-color: #2196f3;
+  --light-pink-text: #c74e8f;
+}
+
+/* Material Form Field Styling */
+.mat-mdc-form-field {
+  direction: rtl;
+  width: 100%;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Material Button Overrides */
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-stroked-button {
+  text-transform: none;
+  font-weight: 500;
+}
+
+/* Material Card Overrides */
+.mat-mdc-card {
+  border-radius: 12px;
+}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Utility Classes */
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+/* ngx-toastr Customization */
+.ngx-toastr {
+  direction: rtl;
+}
+
+.toast-top-left {
+  top: 65px;
+  right: 0;
+  left: auto;
+}
+
+.toast-title {
+  font-weight: 600;
+}
+
+.toast-message {
+  direction: rtl;
+  text-align: right;
+}
+
+.toast-container .toast {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Light Pink Background Text */
+.light-pink-text {
+  color: #c74e8f;
+}
+
+.light-pink-bg-text {
+  color: #d4598c;
+  font-weight: 500;
+}
+
+/* Material Theme Overrides */
+.mat-mdc-toolbar {
+  font-weight: 500;
+}
+
+.mat-mdc-toolbar-single-row {
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px;
+  }
+
+  .mat-mdc-toolbar-single-row {
+    height: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  html, body {
+    font-size: 13px;
+  }
+
+  .mat-mdc-toolbar-single-row {
+    height: 48px;
+  }
+}
+

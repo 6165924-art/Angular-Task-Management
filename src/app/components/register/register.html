@@ -1,41 +1,74 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-icon class="register-icon">person_add</mat-icon>
+      <mat-card-title>הרשמה</mat-card-title>
+      <mat-card-subtitle>צרי חשבון חדש להתחלה</mat-card-subtitle>
+    </mat-card-header>
 
-  <div>
-    <label for="username">שם משתמש</label><br />
-    <input id="username" formControlName="username" />
+    <mat-card-content>
+      @if (error()) {
+        <div class="error-alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ error() }}</span>
+        </div>
+      }
 
-    @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
-    <div style="color:red;">
-      שם משתמש חובה ולפחות 2 תווים.
-    </div>
-    }
-  </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>שם משתמש</mat-label>
+          <input matInput formControlName="username" dir="auto">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
+            <mat-error>שם משתמש חובה ולפחות 2 תווים</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label for="email">אימייל</label><br />
-    <input id="email" formControlName="email" type="email" />
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>אימייל</mat-label>
+          <input matInput formControlName="email" type="email" dir="ltr">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+            <mat-error>נא להזין אימייל תקין</mat-error>
+          }
+        </mat-form-field>
 
-    @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
-    <div style="color:red;">
-      נא להזין אימייל תקין.
-    </div>
-    }
-  </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>סיסמה</mat-label>
+          <input matInput 
+                 formControlName="password" 
+                 [type]="hidePassword() ? 'password' : 'text'"
+                 dir="ltr">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()" 
+                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword()">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+            <mat-error>סיסמה חובה ולפחות 4 תווים</mat-error>
+          }
+        </mat-form-field>
 
-  <div>
-    <label for="password">סיסמה</label><br />
-    <input id="password" formControlName="password" type="password" />
+        <button mat-raised-button color="primary" 
+                type="submit" 
+                [disabled]="registerForm.invalid || isLoading()"
+                class="full-width">
+          @if (isLoading()) {
+            <mat-icon class="loading-spinner">sync</mat-icon>
+            מתחברת...
+          } @else {
+            <mat-icon>person_add</mat-icon>
+            הרשמה
+          }
+        </button>
+      </form>
 
-    @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
-    <div style="color:red;">
-      סיסמה חובה ולפחות 4 תווים.
-    </div>
-    }
-  </div>
+      <div class="divider">או</div>
 
-  <button type="submit" [disabled]="registerForm.invalid">הרשם</button>
-</form>
-
-<p>כבר יש לך חשבון? </p>
-<a routerLinkActive="active" routerLink="/login">התחבר</a>
-<router-outlet></router-outlet>
+      <p class="auth-link">
+        כבר יש לך חשבון?
+        <a routerLink="/login" class="link">התחברי כאן</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

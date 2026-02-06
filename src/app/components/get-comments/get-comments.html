@@ -1,16 +1,59 @@
-<button (click)="navigateToAddComment()">הוספת הערה</button>
-<ul>
-    @if(isLouding()) {
-    <p>טוען...</p>
-    }
-    @else if(comments().length === 0) {
-    <p>לא קיימות הערות להצגה.</p>
-    }
-    @for(comment of comments(); track comment.id) {
-    <li style="border:1px solid black; margin:10px; padding:10px;">
-        <p>user id: {{comment.user_id}}</p>
-        <h4>Comment ID: {{comment.id}}</h4>
-        <p>{{comment.body}}</p>
-        <p>created at: {{comment.created_at}}</p>
-    </li>
-    }
+<div class="comments-section">
+  <!-- Header -->
+  <div class="comments-header">
+    <h3>
+      <mat-icon>comment</mat-icon>
+      הערות
+    </h3>
+    <button mat-raised-button color="primary" (click)="navigateToAddComment()">
+      <mat-icon>add_comment</mat-icon>
+      הוסף הערה
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Comments List -->
+  @if(isLouding()) {
+    <div class="loading-container">
+      <mat-spinner diameter="30"></mat-spinner>
+      <p>טוען הערות...</p>
+    </div>
+  } @else if(error()) {
+    <div class="error-text">
+      <mat-icon>warning</mat-icon>
+      {{ error() }}
+    </div>
+  } @else if(comments().length === 0) {
+    <div class="empty-comments">
+      <mat-icon>chat_bubble_outline</mat-icon>
+      <p>אין הערות עדיין</p>
+    </div>
+  } @else {
+    <div class="comments-list">
+      @for(comment of comments(); track comment.id) {
+        <mat-card class="comment-card">
+          <mat-card-header>
+            <div class="comment-header">
+              <div class="user-avatar">
+                <mat-icon>account_circle</mat-icon>
+              </div>
+              <div class="comment-meta">
+                <span class="user-label">משתמש</span>
+                <span class="user-id">ID: {{ comment.user_id }}</span>
+              </div>
+              <span class="comment-date">{{ formatDate(comment.created_at!) }}</span>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p class="comment-body">{{ comment.body }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+
+  <!-- Add Comment Form -->
+  <app-add-comment></app-add-comment>
+</div>

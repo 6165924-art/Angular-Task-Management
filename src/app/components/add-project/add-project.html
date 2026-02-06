@@ -1,22 +1,62 @@
-<button (click)="navigateToAllProject()">כל הפרויקטים שבקבוצה</button>
-<form [formGroup]="addProjectForm" (ngSubmit)="onSubmit()">
-
-  <div>
-    <label for="name">שם פרויקט</label><br />
-    <input id="name" formControlName="name" />
-
-    @if (addProjectForm.get('name')?.touched && addProjectForm.get('name')?.invalid) {
-    <div style="color:red;">
-      שם פרויקט חובה ולפחות 2 תווים.
+<div class="add-project-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>folder_open</mat-icon>
+        צור פרויקט חדש
+      </h1>
+      <button mat-icon-button (click)="navigateToAllProject()" matTooltip="חזור">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    }
-  </div>
+  </mat-toolbar>
 
-  <div>
-    <label for="description">תיאור</label><br />
-    <input id="description" formControlName="description" />
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      @if(error()) {
+        <div class="error-alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ error() }}</span>
+        </div>
+      }
 
-  </div>
+      <form [formGroup]="addProjectForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>שם הפרויקט</mat-label>
+          <input matInput formControlName="name" dir="auto">
+          <mat-icon matPrefix>folder_special</mat-icon>
+          @if (addProjectForm.get('name')?.touched && addProjectForm.get('name')?.invalid) {
+            <mat-error>שם פרויקט חובה ולפחות 2 תווים</mat-error>
+          }
+        </mat-form-field>
 
-  <button type="submit" [disabled]="addProjectForm.invalid">הוסף פרויקט</button>
-</form>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>תיאור הפרויקט</mat-label>
+          <textarea matInput formControlName="description" rows="4" dir="auto"></textarea>
+          <mat-icon matPrefix>description</mat-icon>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" 
+                  type="submit" 
+                  [disabled]="addProjectForm.invalid || isLoading()"
+                  class="submit-btn">
+            @if (isLoading()) {
+              <mat-icon class="loading-spinner">sync</mat-icon>
+              יוצר...
+            } @else {
+              <mat-icon>add_circle</mat-icon>
+              צור פרויקט
+            }
+          </button>
+          <button mat-stroked-button type="button" (click)="navigateToAllProject()">
+            <mat-icon>cancel</mat-icon>
+            ביטול
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,13 +1,61 @@
-<h3>שלום {{this.currentUser()}}</h3>
-<nav>
-  @if(isLoggedIn()) {
-  <a routerLinkActive="active" routerLink="/logout">Logout</a>
-  <a routerLinkActive="active" routerLink="/teams">Teams</a>
-  <a routerLinkActive="active" routerLink="/tasks">all Tasks</a>
-  }
-  @else{
-  <a routerLinkActive="active" routerLink="/register">Register</a>
-  <a routerLinkActive="active" routerLink="/login">Login</a>
-  }
-</nav>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <!-- Toolbar -->
+  <mat-toolbar color="primary" class="app-toolbar">
+    <div class="toolbar-left">
+      <button mat-icon-button (click)="toggleSidenav()" *ngIf="isLoggedIn()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">
+        <mat-icon class="title-icon">task_alt</mat-icon>
+        {{ title() }}
+      </span>
+    </div>
+    
+    <div class="toolbar-right" *ngIf="isLoggedIn()">
+      <span class="user-info">
+        <mat-icon>account_circle</mat-icon>
+        {{ currentUser() }}
+      </span>
+    </div>
+  </mat-toolbar>
+
+  <!-- Sidenav -->
+  <mat-sidenav-container class="sidenav-container" *ngIf="isLoggedIn()">
+    <mat-sidenav #sidenav [opened]="sidenavOpen()" mode="over" class="sidenav">
+      <div class="sidenav-header">
+        <mat-icon class="sidenav-logo">dashboard</mat-icon>
+        <h2>תפריט</h2>
+      </div>
+
+      <mat-nav-list>
+        <mat-list-item routerLink="/teams" routerLinkActive="active" 
+                       (click)="closeSidenav()" class="nav-item">
+          <mat-icon matListItemIcon>group</mat-icon>
+          <span matListItemTitle>קבוצות שלי</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/tasks" routerLinkActive="active" 
+                       (click)="closeSidenav()" class="nav-item">
+          <mat-icon matListItemIcon>task_alt</mat-icon>
+          <span matListItemTitle>כל המשימות</span>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item (click)="logout()" class="nav-item logout-item">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          <span matListItemTitle>התנתק</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!-- Content when not logged in -->
+  <div *ngIf="!isLoggedIn()" class="auth-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

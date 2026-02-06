@@ -1,18 +1,91 @@
-<ul>
-  <button (click)="navigateToAddTeam()">הוספת קבוצה</button>
+<div class="teams-container">
+  <!-- Header עם כפתורי ניווט -->
+  <mat-toolbar color="primary" class="toolbar-header">
+    <div class="toolbar-content">
+      <h1>
+        <mat-icon>group</mat-icon>
+        הקבוצות שלי
+      </h1>
+      <button mat-raised-button color="accent" (click)="navigateToAddTeam()">
+        <mat-icon>add_circle</mat-icon>
+        הוספת קבוצה חדשה
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- מצב טעינה -->
   @if(isLouding()) {
-  <p>טוען...</p>
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>טוען קבוצות...</p>
+    </div>
+  } @else if(error()) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <div class="error-content">
+          <mat-icon class="error-icon">error_outline</mat-icon>
+          <p class="error-text">{{ error() }}</p>
+          <button mat-raised-button color="primary" (click)="retry()">
+            <mat-icon>refresh</mat-icon>
+            נסה שוב
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else if(teams().length === 0) {
+    <mat-card class="empty-state-card">
+      <mat-card-content>
+        <mat-icon class="empty-icon">folder_open</mat-icon>
+        <p class="empty-text">אין קבוצות להצגה כרגע</p>
+        <p class="empty-subtext">צור את הקבוצה הראשונה שלך להתחלה</p>
+        <button mat-raised-button color="accent" (click)="navigateToAddTeam()">
+          <mat-icon>add</mat-icon>
+          צור קבוצה ראשונה
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <!-- רשימת קבוצות -->
+    <div class="teams-grid">
+      @for(team of teams(); track team.id) {
+        <mat-card class="team-card">
+          <mat-card-header>
+            <div class="team-header-content">
+              <div class="team-icon">
+                <mat-icon>group</mat-icon>
+              </div>
+              <div class="team-info">
+                <h3 class="team-name">{{ team.name }}</h3>
+                <p class="team-date">
+                  <mat-icon>calendar_today</mat-icon>
+                  {{ team.created_at | date: 'dd/MM/yyyy' }}
+                </p>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="team-stats">
+              <div class="stat">
+                <mat-icon>people</mat-icon>
+                <div>
+                  <span class="stat-value">{{ team.members_count }}</span>
+                  <span class="stat-label">חברים</span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-raised-button color="primary" 
+                    (click)="navigateToProjects(team.id!)"
+                    class="full-width-btn">
+              <mat-icon>folder_open</mat-icon>
+              צפייה בפרויקטים
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
   }
-  @else if(teams().length === 0) {
-  <p>לא קיימות קבוצות להצגה.</p>
-  }
-  @for(team of teams();track team.id) {
-  <li style="border:1px solid black; margin:10px; padding:10px;">
-    <h4>Team ID: {{team.id}}</h4>
-    <h2>Name: {{team.name}}</h2>
-    <p>Created At: {{team.created_at}}</p>
-    <p>Members Count: {{team.members_count}}</p>
-    <button (click)="navigateToProjects(team.id)">כל הפרויקטים</button>
-  </li>
-  }
-</ul>
+</div>
